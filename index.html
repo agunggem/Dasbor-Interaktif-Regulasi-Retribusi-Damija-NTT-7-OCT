@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dasbor Interaktif: Regulasi Retribusi Damija NTT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral -->
+    <!-- Application Structure Plan: Aplikasi ini dirancang sebagai dasbor satu halaman dengan beberapa bagian tematik yang dapat digulir. Struktur ini dipilih untuk memfasilitasi alur pengguna yang berbeda. Bagian atas menjelaskan kerangka regulasi secara visual untuk pemahaman konseptual. Bagian utama adalah 'Kalkulator Simulasi' yang berorientasi pada tugas, memungkinkan pengguna (calon pemohon) untuk langsung mendapatkan estimasi biaya. Bagian berikutnya menyajikan data referensi ('Komponen Tarif' dan 'Data Ruas Jalan') bagi pengguna yang butuh detail, dan 'Panduan Teknis' untuk tim lapangan atau teknis. Pendekatan ini mengubah dokumen hukum yang padat menjadi alat yang fungsional dan mudah diakses, memprioritaskan tugas pengguna daripada struktur asli dokumen. -->
+    <!-- Visualization & Content Choices: 1. Alur Regulasi (HTML/CSS Diagram): Goal=Inform/Organize, Interaction=Visual. Justification: Mengurai hierarki hukum yang kompleks menjadi diagram alur sederhana agar mudah dipahami. 2. Kalkulator Tarif (HTML Forms + JS): Goal=Inform, Interaction=Input Pengguna. Justification: Alat inti yang menerjemahkan formula abstrak menjadi hasil finansial konkret, memberikan nilai praktis langsung. 3. Visualisasi Indeks (Chart.js Bar Charts): Goal=Compare, Interaction=Tooltips. Justification: Membandingkan dampak berbagai 'Jenis Pemanfaatan' (IJP) dan 'Lokasi' (IL) secara visual lebih efektif daripada tabel saja. 4. Panduan Teknis Interaktif (JS Show/Hide): Goal=Inform, Interaction=Seleksi. Justification: Memberikan panduan teknis yang relevan sesuai pilihan pengguna, mengurangi kepadatan informasi. 5. Tabel Data Filterable (HTML + JS Search): Goal=Organize, Interaction=Pencarian. Justification: Memudahkan pencarian cepat data spesifik dari daftar ruas jalan yang panjang. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #38332E;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .accent-bg { background-color: #EAE6E1; }
+        .accent-text { color: #8C7B6C; }
+        .highlight-text { color: #A56A39; }
+        .btn-primary {
+            background-color: #A56A39;
+            color: #FFFFFF;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #8C5A2D;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #A56A39;
+            border-bottom-color: #A56A39;
+        }
+        .flow-box {
+            border: 1px solid #DCD8D3;
+            background-color: #FFFFFF;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #BDB5AD;
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: #A56A39;
+            border: 1px solid #A56A39;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            line-height: 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover {
+            background-color: #A56A39;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200/50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold highlight-text">Dasbor Regulasi Damija NTT</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#hero" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Beranda</a>
+                        <a href="#flow" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Alur Regulasi</a>
+                        <a href="#calculator" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Kalkulator</a>
+                        <a href="#components" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Komponen Tarif</a>
+                        <a href="#guide" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Panduan Teknis</a>
+                        <a href="#data" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Data Jalan</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="py-20 md:py-28">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+                    Memahami Regulasi Retribusi Pemanfaatan Ruang Jalan Provinsi NTT
+                </h2>
+                <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-gray-600">
+                    Sebuah alat bantu interaktif untuk menjelajahi, mensimulasikan, dan memahami kerangka kerja pemungutan retribusi pemanfaatan Daerah Milik Jalan (Damija).
+                </p>
+            </div>
+        </section>
+
+        <!-- Regulatory Flow Section -->
+        <section id="flow" class="py-16 md:py-24 accent-bg">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold">Alur Regulasi: Dari Kewenangan Hingga Operasional</h3>
+                    <p class="mt-4 text-lg text-gray-600">Regulasi ini dibangun secara berjenjang, di mana setiap dokumen memiliki peran spesifik dan saling menguatkan.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-11 gap-4 items-center">
+                    <div class="flow-box md:col-span-3">
+                        <span class="block text-sm font-semibold accent-text">DASAR HUKUM UTAMA</span>
+                        <h4 class="text-lg font-bold mt-1">Perda No. 1/2024</h4>
+                        <p class="text-sm mt-2 text-gray-600">Memberikan kewenangan legal kepada Pemprov NTT untuk memungut retribusi.</p>
+                    </div>
+                    <div class="flow-arrow hidden md:block">➔</div>
+                    <div class="flow-box md:col-span-3">
+                        <span class="block text-sm font-semibold accent-text">ATURAN NORMATIF</span>
+                        <h4 class="text-lg font-bold mt-1">Peraturan Gubernur</h4>
+                        <p class="text-sm mt-2 text-gray-600">Menjabarkan prinsip, prosedur, dan formula perhitungan tarif retribusi.</p>
+                        <a href="Draf Rancangan Peraturan Gubernur NTT (Diperbarui).pdf" target="_blank" class="btn-secondary mt-3 inline-block">Lihat Dokumen</a>
+                    </div>
+                    <div class="flow-arrow hidden md:block">➔</div>
+                    <div class="md:col-span-3 grid grid-cols-1 gap-4">
+                        <div class="flow-box">
+                            <span class="block text-sm font-semibold accent-text">PEDOMAN OPERASIONAL</span>
+                            <h4 class="text-lg font-bold mt-1">Juknis Dinas PUPR</h4>
+                            <p class="text-sm mt-2 text-gray-600">Panduan teknis terukur untuk pelaksanaan di lapangan.</p>
+                            <a href="Draf Juknis Rekomendasi Teknis Pemanfaatan Damija NTT.docx.pdf" target="_blank" class="btn-secondary mt-3 inline-block">Lihat Dokumen</a>
+                        </div>
+                        <div class="flow-box">
+                             <span class="block text-sm font-semibold accent-text">DASAR DATA KUANTITATIF</span>
+                            <h4 class="text-lg font-bold mt-1">Kepgub Lebar Rumija</h4>
+                            <p class="text-sm mt-2 text-gray-600">Menyediakan data lebar jalan yang definitif sebagai acuan Juknis.</p>
+                             <a href="Draf Keputusan Gubernur NTT tentang Penetapan Lebar Rumija.pdf" target="_blank" class="btn-secondary mt-3 inline-block">Lihat Dokumen</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculator Section -->
+        <section id="calculator" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold">Kalkulator Simulasi Tarif</h3>
+                    <p class="mt-4 text-lg text-gray-600">Hitung estimasi biaya retribusi tahunan berdasarkan formula yang ditetapkan dalam Peraturan Gubernur.</p>
+                </div>
+                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="space-y-6 bg-white p-8 rounded-lg shadow-md border border-gray-200/80">
+                        <div>
+                            <label for="jenisPemanfaatan" class="block text-sm font-medium text-gray-700">Jenis Pemanfaatan</label>
+                            <select id="jenisPemanfaatan" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-A56A39 focus:border-A56A39 sm:text-sm rounded-md"></select>
+                        </div>
+                        <div>
+                            <label for="lokasiJalan" class="block text-sm font-medium text-gray-700">Kategori Lokasi Ruas Jalan</label>
+                            <select id="lokasiJalan" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-A56A39 focus:border-A56A39 sm:text-sm rounded-md"></select>
+                        </div>
+                        <div>
+                            <label for="volume" class="block text-sm font-medium text-gray-700">Volume</label>
+                            <div class="mt-1 relative rounded-md shadow-sm">
+                                <input type="number" id="volume" class="focus:ring-A56A39 focus:border-A56A39 block w-full pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0" value="100">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 sm:text-sm" id="volumeUnit">m'</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="durasi" class="block text-sm font-medium text-gray-700">Durasi (Tahun)</label>
+                            <input type="number" id="durasi" class="mt-1 focus:ring-A56A39 focus:border-A56A39 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="1" value="1">
+                        </div>
+                    </div>
+                    <div class="accent-bg p-8 rounded-lg">
+                        <h4 class="text-lg font-semibold">Estimasi Biaya Retribusi</h4>
+                        <div class="mt-4 space-y-2 text-sm text-gray-700">
+                            <p>Formula: <code class="bg-gray-200 p-1 rounded">IJP x IL x Volume x HSD</code></p>
+                            <div id="calculationBreakdown">
+                                <p>IJP (Indeks Jenis Pemanfaatan): <span id="valIJP" class="font-medium">1.5</span></p>
+                                <p>IL (Indeks Lokasi): <span id="valIL" class="font-medium">2.0</span></p>
+                                <p>Volume: <span id="valVolume" class="font-medium">100</span> m'</p>
+                                <p>HSD (Harga Satuan Dasar): <span id="valHSD" class="font-medium">Rp 25.000</span></p>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">Sumber definisi: Lampiran Rancangan Peraturan Gubernur NTT.</p>
+                        </div>
+                        <div class="mt-6 border-t border-gray-300 pt-6">
+                            <p class="text-sm text-gray-600">Tarif Tahunan</p>
+                            <p id="resultAnnual" class="text-3xl font-bold highlight-text">Rp 7.500.000</p>
+                            <p class="text-sm text-gray-600 mt-4">Total Tarif untuk <span id="totalDuration">1</span> Tahun</p>
+                            <p id="resultTotal" class="text-2xl font-bold highlight-text">Rp 7.500.000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Components Section -->
+        <section id="components" class="py-16 md:py-24 accent-bg">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold">Jelajahi Komponen Tarif</h3>
+                    <p class="mt-4 text-lg text-gray-600">Setiap komponen dalam formula memiliki nilai yang telah ditetapkan untuk menjamin transparansi.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                         <h4 class="text-xl font-bold mb-4">Perbandingan Indeks Jenis Pemanfaatan (IJP)</h4>
+                        <p class="mb-6 text-gray-600">IJP adalah koefisien pengali berdasarkan jenis konstruksi dan dampak komersial. Semakin tinggi nilainya, semakin besar dampak atau nilai komersialnya.</p>
+                        <div class="chart-container">
+                            <canvas id="ijpChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-4">Perbandingan Indeks Lokasi (IL)</h4>
+                        <p class="mb-6 text-gray-600">IL adalah koefisien pengali berdasarkan nilai strategis dan ekonomis ruas jalan. Lokasi premium memiliki indeks yang lebih tinggi.</p>
+                        <div class="chart-container">
+                            <canvas id="ilChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                 <div class="mt-12 bg-white p-6 rounded-lg shadow-md border border-gray-200/80">
+                    <h4 class="text-xl font-bold mb-4">Harga Satuan Dasar (HSD)</h4>
+                    <p class="text-gray-600">HSD adalah nilai dasar rupiah yang menjadi acuan pengali dalam formula. Nilai ini akan ditinjau secara berkala (minimal setiap 3 tahun) berdasarkan harga sewa pasar wajar di daerah.</p>
+                    <div class="mt-4 text-center p-6 bg-amber-50 rounded-lg">
+                        <span class="text-4xl font-bold highlight-text">Rp 25.000</span>
+                        <span class="text-gray-600"> / m', m², atau unit</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Guide Section -->
+        <section id="guide" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold">Panduan Teknis Pemanfaatan</h3>
+                    <p class="mt-4 text-lg text-gray-600">Aturan penempatan bangunan dan utilitas bervariasi tergantung jenis pemanfaatan dan tipologi kondisi Damija.</p>
+                </div>
+                <div class="max-w-3xl mx-auto">
+                    <label for="guideJenis" class="block text-sm font-medium text-gray-700">Pilih Jenis Pemanfaatan untuk Melihat Panduan:</label>
+                    <select id="guideJenis" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-A56A39 focus:border-A56A39 sm:text-sm rounded-md"></select>
+                </div>
+                <div id="guideContent" class="mt-10">
+                    <!-- Content will be injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Road Data Section -->
+        <section id="data" class="py-16 md:py-24 accent-bg">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold">Data Ruas Jalan Provinsi</h3>
+                    <p class="mt-4 text-lg text-gray-600">Cari dan temukan informasi detail mengenai lebar Rumija dan kategori lokasi untuk setiap ruas jalan.</p>
+                </div>
+                <div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-md border border-gray-200/80">
+                    <input type="text" id="searchInput" placeholder="Cari nama ruas jalan atau kabupaten..." class="w-full p-2 border border-gray-300 rounded-md mb-4">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Ruas Jalan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lokasi</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lebar Rumija (m)</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori Lokasi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="roadTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Data will be injected by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2024 Dasbor Interaktif Regulasi Damija. Dibuat untuk memfasilitasi pemahaman publik.</p>
+            <p class="mt-2 text-gray-400">Data bersumber dari draf dokumen regulasi Pemerintah Provinsi NTT.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const HSD = 25000;
+
+        const ijpData = [
+            { name: "Videotron / Megatron", value: 3.0, unit: "m²" },
+            { name: "Papan Reklame (Billboard)", value: 2.0, unit: "m²" },
+            { name: "Jaringan Kabel Telekomunikasi Bawah Tanah (Fiber Optik)", value: 1.5, unit: "m'" },
+            { name: "Jaringan Kabel Listrik Bawah Tanah", value: 1.4, unit: "m'" },
+            { name: "Jaringan Pipa Gas / BBM", value: 1.3, unit: "m'" },
+            { name: "Jaringan Kabel Telekomunikasi Udara", value: 1.2, unit: "m'" },
+            { name: "Jaringan Kabel Listrik Udara", value: 1.1, unit: "m'" },
+            { name: "Tiang Utilitas (Listrik/Telekomunikasi)", value: 1.0, unit: "Unit" },
+            { name: "Jaringan Pipa Air Bersih / Air Limbah", value: 0.8, unit: "m'" },
+            { name: "Gapura/Tugu/Monumen", value: 0.5, unit: "Unit" }
+        ];
+
+        const ilData = [
+            { name: "Kategori I (Ibu Kota Provinsi, CBD)", value: 2.0 },
+            { name: "Kategori II (Ibu Kota Kab/Kota, KSPN)", value: 1.5 },
+            { name: "Kategori III (Jalan Kolektor Perkotaan, Industri)", value: 1.0 },
+            { name: "Kategori IV (Perdesaan & lainnya)", value: 0.7 }
+        ];
+        
+        const roadData = [
+            { name: "Jl. Piet A. Tallo (Batas Kota - Penfui)", location: "Kota Kupang", width: 30, category: "Kategori I" },
+            { name: "Jl. Adi Sucipto", location: "Kota Kupang", width: 25, category: "Kategori I" },
+            { name: "Jalan Soekarno-Hatta (Labuan Bajo)", location: "Kab. Manggarai Barat", width: 25, category: "Kategori II" },
+            { name: "Ruas Oesapa - Sulamu", location: "Kab. Kupang", width: 15, category: "Kategori III" },
+            { name: "Ruas Batas Kota Soe - Kapan", location: "Kab. Timor Tengah Selatan", width: 12, category: "Kategori III" },
+            { name: "Jalan Lingkar Utara Kefamenanu", location: "Kab. Timor Tengah Utara", width: 20, category: "Kategori II" },
+            { name: "Ruas Jalan Atambua - Atapupu", location: "Kab. Belu", width: 15, category: "Kategori III" },
+            { name: "Ruas Betun - Batas Kab. Belu", location: "Kab. Malaka", width: 10, category: "Kategori IV" },
+            { name: "Ruas Ruteng - Iteng", location: "Kab. Manggarai", width: 12, category: "Kategori IV" },
+            { name: "Ruas Bajawa - Mataloko", location: "Kab. Ngada", width: 15, category: "Kategori III" },
+            { name: "Ruas Ende Wolowaru", location: "Kab. Ende", width: 15, category: "Kategori III" },
+            { name: "Ruas Maumere - Lela", location: "Kab. Sikka", width: 20, category: "Kategori II" },
+            { name: "Ruas Larantuka - Wulanggitang", location: "Kab. Flores Timur", width: 12, category: "Kategori IV" },
+            { name: "Jalan Lingkar Pulau Lembata", location: "Kab. Lembata", width: 10, category: "Kategori IV" },
+            { name: "Ruas Waingapu Melolo", location: "Kab. Sumba Timur", width: 15, category: "Kategori III" },
+            { name: "Ruas Waikabubak - Mamboro", location: "Kab. Sumba Barat", width: 12, category: "Kategori IV" },
+            { name: "Ruas Tambolaka - Kodi", location: "Kab. Sumba Barat Daya", width: 15, category: "Kategori III" },
+            { name: "Ruas Anakalang - Laiwangi", location: "Kab. Sumba Tengah", width: 10, category: "Kategori IV" },
+            { name: "Jalan Lingkar Pulau Alor", location: "Kab. Alor", width: 10, category: "Kategori IV" },
+            { name: "Ruas Ba'a - Nemberala", location: "Kab. Rote Ndao", width: 12, category: "Kategori IV" },
+            { name: "Ruas Seba - Mesara", location: "Kab. Sabu Raijua", width: 10, category: "Kategori IV" },
+        ];
+
+        const guideData = {
+            'Utilitas Bawah Tanah': {
+                'Tipe A (>20m)': 'Diutamakan di luar bahu jalan/trotoar.',
+                'Tipe B (15-20m)': 'Diutamakan di luar bahu jalan/trotoar.',
+                'Tipe C (10-15m)': 'Ditempetkan di sisi terluar bahu/trotoar jika terpaksa.',
+                'Tipe D (<10m)': 'Pemasangan memanjang jalan TIDAK DIIZINKAN. Melintang wajib metode boring.'
+            },
+            'Utilitas Atas Tanah': {
+                'Tipe A (>20m)': 'Di ambang pengaman, min. 1m dari tepi luar trotoar. Tinggi kabel min. 5m.',
+                'Tipe B (15-20m)': 'Di bahu jalan, min. 1m dari tepi luar perkerasan. Tinggi kabel min. 5m.',
+                'Tipe C (10-15m)': 'Pemasangan tiang di dalam Damija TIDAK DIIZINKAN.',
+                'Tipe D (<10m)': 'Pemasangan tiang di dalam Damija TIDAK DIIZINKAN.'
+            },
+            'Iklan dan Media Informasi': {
+                'Tipe A (>20m)': 'Di ambang pengaman, min. 2m dari tepi luar trotoar. Tinggi bidang iklan min. 5m.',
+                'Tipe B (15-20m)': 'Di bahu jalan, min. 2m dari tepi luar perkerasan. Tinggi bidang iklan min. 5m.',
+                'Tipe C (10-15m)': 'Pemasangan konstruksi di dalam Damija TIDAK DIIZINKAN.',
+                'Tipe D (<10m)': 'Pemasangan konstruksi di dalam Damija TIDAK DIIZINKAN.'
+            },
+            'Bangun-Bangunan (Gapura, Tugu)': {
+                'Tipe A (>20m)': 'Jarak min. 2m dari tepi paling luar bahu jalan atau trotoar.',
+                'Tipe B (15-20m)': 'Jarak min. 2m dari tepi paling luar bahu jalan atau trotoar.',
+                'Tipe C (10-15m)': 'Pembangunan di dalam Damija TIDAK DIIZINKAN.',
+                'Tipe D (<10m)': 'Pembangunan di dalam Damija TIDAK DIIZINKAN.'
+            }
+        };
+
+        const formatCurrency = (value) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(value);
+
+        // Calculator Logic
+        const jenisSelect = document.getElementById('jenisPemanfaatan');
+        const lokasiSelect = document.getElementById('lokasiJalan');
+        const volumeInput = document.getElementById('volume');
+        const durasiInput = document.getElementById('durasi');
+        const volumeUnit = document.getElementById('volumeUnit');
+        const resultAnnual = document.getElementById('resultAnnual');
+        const resultTotal = document.getElementById('resultTotal');
+        const totalDuration = document.getElementById('totalDuration');
+        const valIJP = document.getElementById('valIJP');
+        const valIL = document.getElementById('valIL');
+        const valVolume = document.getElementById('valVolume');
+        const valHSD = document.getElementById('valHSD');
+
+        function populateSelects() {
+            ijpData.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.value;
+                option.textContent = item.name;
+                option.dataset.unit = item.unit;
+                jenisSelect.appendChild(option);
+            });
+
+            ilData.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.value;
+                option.textContent = item.name;
+                lokasiSelect.appendChild(option);
+            });
+            jenisSelect.value = 1.5; // Default to Fiber Optik
+            lokasiSelect.value = 2.0; // Default to Kategori I
+        }
+
+        function calculate() {
+            const ijp = parseFloat(jenisSelect.value);
+            const il = parseFloat(lokasiSelect.value);
+            const volume = parseFloat(volumeInput.value) || 0;
+            const durasi = parseInt(durasiInput.value) || 1;
+            const unit = jenisSelect.options[jenisSelect.selectedIndex].dataset.unit;
+
+            const annualCost = ijp * il * volume * HSD;
+            const totalCost = annualCost * durasi;
+            
+            resultAnnual.textContent = formatCurrency(annualCost);
+            resultTotal.textContent = formatCurrency(totalCost);
+            totalDuration.textContent = durasi;
+            volumeUnit.textContent = unit;
+
+            valIJP.textContent = ijp;
+            valIL.textContent = il;
+            valVolume.textContent = `${volume} ${unit}`;
+            valHSD.textContent = formatCurrency(HSD);
+        }
+
+        [jenisSelect, lokasiSelect, volumeInput, durasiInput].forEach(el => {
+            el.addEventListener('change', calculate);
+            el.addEventListener('keyup', calculate);
+        });
+
+        // Charts
+        const ijpChartCtx = document.getElementById('ijpChart').getContext('2d');
+        new Chart(ijpChartCtx, {
+            type: 'bar',
+            data: {
+                labels: ijpData.map(d => d.name.length > 25 ? d.name.substring(0,25)+'...' : d.name),
+                datasets: [{
+                    label: 'Indeks (IJP)',
+                    data: ijpData.map(d => d.value),
+                    backgroundColor: '#A56A39',
+                    borderColor: '#8C5A2D',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: { legend: { display: false } },
+                scales: { x: { beginAtZero: true } }
+            }
+        });
+
+        const ilChartCtx = document.getElementById('ilChart').getContext('2d');
+        new Chart(ilChartCtx, {
+            type: 'bar',
+            data: {
+                labels: ilData.map(d => d.name),
+                datasets: [{
+                    label: 'Indeks (IL)',
+                    data: ilData.map(d => d.value),
+                    backgroundColor: '#8C7B6C',
+                    borderColor: '#736557',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Technical Guide Logic
+        const guideJenisSelect = document.getElementById('guideJenis');
+        const guideContent = document.getElementById('guideContent');
+
+        function populateGuideSelect() {
+            Object.keys(guideData).forEach(key => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = key;
+                guideJenisSelect.appendChild(option);
+            });
+        }
+
+        function updateGuideContent() {
+            const selectedKey = guideJenisSelect.value;
+            const data = guideData[selectedKey];
+            let html = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">';
+            for (const [tipe, rule] of Object.entries(data)) {
+                html += `
+                    <div class="bg-white p-6 rounded-lg shadow border border-gray-200/80">
+                        <h5 class="font-bold text-lg highlight-text">${tipe}</h5>
+                        <p class="mt-2 text-gray-700">${rule}</p>
+                    </div>
+                `;
+            }
+            html += '</div>';
+            guideContent.innerHTML = html;
+        }
+        
+        guideJenisSelect.addEventListener('change', updateGuideContent);
+
+        // Road Data Table Logic
+        const roadTableBody = document.getElementById('roadTableBody');
+        const searchInput = document.getElementById('searchInput');
+
+        function populateRoadTable(filter = '') {
+            roadTableBody.innerHTML = '';
+            const lowercasedFilter = filter.toLowerCase();
+            const filteredData = roadData.filter(road => 
+                road.name.toLowerCase().includes(lowercasedFilter) ||
+                road.location.toLowerCase().includes(lowercasedFilter)
+            );
+
+            if (filteredData.length === 0) {
+                roadTableBody.innerHTML = `<tr><td colspan="4" class="text-center py-4">Data tidak ditemukan.</td></tr>`;
+                return;
+            }
+
+            filteredData.forEach(road => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${road.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${road.location}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${road.width}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${road.category}</td>
+                `;
+                roadTableBody.appendChild(row);
+            });
+        }
+
+        searchInput.addEventListener('keyup', (e) => populateRoadTable(e.target.value));
+
+        // Initial calls
+        populateSelects();
+        calculate();
+        populateGuideSelect();
+        updateGuideContent();
+        populateRoadTable();
+        
+        // Active Nav Link on Scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 80) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
+
