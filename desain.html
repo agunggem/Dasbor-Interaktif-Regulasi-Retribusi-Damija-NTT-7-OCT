@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografis: Logika Desain & Interaktivitas Dasbor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Palette: Energetic & Playful -->
+    <!-- Narrative Plan: The infographic explains the 'why' behind the dashboard's design. It first introduces the core principle: intentional design choices. Then, it splits into two paths. Path 1 ("The Interactive Path") explains that interactivity is for personal, specific user questions like "What about my project?", using the calculator and search as prime examples. Path 2 ("The Visual Path") explains that static visuals are for providing quick, big-picture insights and comparisons, using the index comparison charts and regulatory flowchart as examples. The conclusion summarizes the two approaches and their shared goal of making complex information accessible. -->
+    <!-- Visualization Plan: -->
+    <!-- 1. Interactive Path Examples (Calculator, Search): Goal=Organize, Visualization=Styled HTML/CSS Diagram, Justification=Visually represents the user-input-driven process without needing complex charts. Clearly shows that user action leads to a specific result. Implemented with HTML/Tailwind, NO SVG/Mermaid. -->
+    <!-- 2. Visual Path Examples (Index Charts): Goal=Compare, Visualization=Bar Charts (Chart.js), Justification=Bar charts are the most effective way to show stark comparisons between category values (e.g., high-value commercial vs. low-value utility), which is the core message. Implemented with Chart.js/Canvas, NO SVG. -->
+    <!-- 3. Visual Path Example (Flowchart): Goal=Organize, Visualization=Styled HTML/CSS Diagram, Justification=A simple flowchart is the clearest way to represent a hierarchy or process, making the complex legal structure easy to grasp. Implemented with HTML/Tailwind, NO SVG/Mermaid. -->
+    <!-- Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in this output. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #118AB2;
+            line-height: 1;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="text-[#073B4C]">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#118AB2] mb-4">Desain yang Bertujuan</h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Membedah logika di balik setiap elemen dasbor: Kapan interaktif, dan kapan cukup visual?</p>
+        </header>
+
+        <main class="space-y-16">
+
+            <!-- Section 1: Interactive Path -->
+            <section id="interactive-path">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-[#118AB2] mb-3">Jalur Interaktif: Saat Pengguna Bertanya "Bagaimana Dengan Saya?"</h2>
+                    <p class="max-w-2xl mx-auto text-gray-500">Elemen interaktif dirancang untuk menjawab pertanyaan yang personal dan spesifik, yang membutuhkan input langsung dari pengguna.</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-xl p-8 border-t-8 border-[#FF6B6B]">
+                    <h3 class="text-2xl font-bold text-[#073B4C] mb-4">Contoh Utama: Kalkulator Simulasi Tarif</h3>
+                    <p class="text-gray-600 mb-6">Pertanyaan pengguna seperti "Berapa biaya untuk proyek spesifik saya?" tidak bisa dijawab oleh grafik statis. Interaksi adalah jembatan antara aturan umum dalam Pergub dan kasus spesifik pengguna.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-5 items-center gap-4 text-center p-4 bg-slate-50 rounded-lg">
+                        <div class="flex flex-col items-center p-3 bg-white rounded shadow">
+                            <span class="text-3xl">🏗️</span>
+                            <span class="font-semibold mt-2">Jenis Pemanfaatan</span>
+                        </div>
+                        <div class="flow-arrow hidden md:block">+</div>
+                        <div class="flex flex-col items-center p-3 bg-white rounded shadow">
+                            <span class="text-3xl">📍</span>
+                            <span class="font-semibold mt-2">Lokasi/Kategori</span>
+                        </div>
+                         <div class="flow-arrow hidden md:block">+</div>
+                        <div class="flex flex-col items-center p-3 bg-white rounded shadow">
+                             <span class="text-3xl">📏</span>
+                            <span class="font-semibold mt-2">Volume/Durasi</span>
+                        </div>
+                    </div>
+                    <div class="flow-arrow my-4">⬇️</div>
+                    <div class="bg-[#06D6A0] text-white p-6 rounded-lg shadow-lg text-center">
+                        <p class="font-bold text-xl">HASIL PERSONAL</p>
+                        <p>Estimasi Biaya Spesifik Untuk Proyek Anda</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Visual Path -->
+            <section id="visual-path">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-[#118AB2] mb-3">Jalur Visual: Saat Pengguna Perlu "Gambaran Besar"</h2>
+                    <p class="max-w-2xl mx-auto text-gray-500">Visualisasi digunakan untuk menyajikan pola, perbandingan, dan struktur secara cepat tanpa memerlukan input apa pun dari pengguna.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-xl p-8 border-t-8 border-[#FFD166]">
+                        <h3 class="text-2xl font-bold text-[#073B4C] mb-4">Contoh: Grafik Perbandingan Indeks</h3>
+                        <p class="text-gray-600 mb-6">Tujuannya adalah pemahaman komparatif dalam sekejap. Pengguna bisa langsung melihat nilai pemanfaatan komersial jauh lebih tinggi daripada utilitas publik.</p>
+                        <div class="chart-container">
+                            <canvas id="ijpChart"></canvas>
+                        </div>
+                    </div>
+                     <div class="bg-white rounded-lg shadow-xl p-8 border-t-8 border-[#06D6A0]">
+                        <h3 class="text-2xl font-bold text-[#073B4C] mb-4">Contoh: Diagram Alur Regulasi</h3>
+                        <p class="text-gray-600 mb-6">Menjelaskan hierarki hukum dengan teks bisa jadi rumit. Diagram alur secara visual menunjukkan struktur dan ketergantungan antar dokumen dengan jelas.</p>
+                        <div class="space-y-4 mt-8">
+                            <div class="bg-slate-100 p-3 rounded-md text-center font-bold">Perda (Kewenangan)</div>
+                            <div class="flow-arrow">⬇️</div>
+                            <div class="bg-slate-100 p-3 rounded-md text-center font-bold">Pergub (Aturan & Formula)</div>
+                             <div class="flow-arrow">⬇️</div>
+                            <div class="bg-slate-100 p-3 rounded-md text-center font-bold">Kepgub & Juknis (Data & Teknis)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conclusion -->
+            <section id="conclusion" class="bg-white rounded-lg shadow-xl p-8 mt-16 border-t-8 border-[#118AB2]">
+                 <h2 class="text-3xl font-bold text-center text-[#118AB2] mb-8">Kesimpulan: Dua Pendekatan, Satu Tujuan</h2>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+                    <div class="bg-red-50 p-6 rounded-lg">
+                        <h3 class="font-bold text-xl text-[#FF6B6B] mb-3">Gunakan INTERAKSI</h3>
+                        <p class="text-gray-700">Untuk personalisasi dan eksplorasi data, di mana pengguna memegang kendali untuk menemukan jawaban spesifik sesuai kebutuhannya.</p>
+                    </div>
+                    <div class="bg-yellow-50 p-6 rounded-lg">
+                        <h3 class="font-bold text-xl text-[#FFD166] mb-3">Gunakan VISUALISASI</h3>
+                        <p class="text-gray-700">Untuk pemahaman cepat dan gambaran besar, di mana dasbor menyajikan wawasan dan perbandingan secara langsung.</p>
+                    </div>
+                 </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center text-gray-500 mt-12 py-4 border-t">
+            <p>Mengubah regulasi yang statis menjadi pengalaman yang dinamis, fungsional, dan mudah dipahami.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tooltipTitleCallback = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            const ijpChartCtx = document.getElementById('ijpChart').getContext('2d');
+            new Chart(ijpChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Videotron (Komersial)', 'Pipa Air (Publik)'],
+                    datasets: [{
+                        label: 'Nilai Indeks Jenis Pemanfaatan (IJP)',
+                        data: [3.0, 0.8],
+                        backgroundColor: [
+                            '#FF6B6B',
+                            '#118AB2'
+                        ],
+                        borderColor: [
+                            '#FF6B6B',
+                            '#118AB2'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    ...tooltipTitleCallback,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Faktor Pengali'
+                            }
+                        }
+                    },
+                    plugins: {
+                         ...tooltipTitleCallback.plugins,
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

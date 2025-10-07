@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografis: Logika di Balik Alur Regulasi Pemanfaatan Damija</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Palette: Brilliant Blues -->
+    <!-- Narrative Plan: The infographic tells a top-down story, starting with the high-level objective, visualizing the 5-level regulatory hierarchy as the core narrative, detailing the key objective formula, illustrating the data-driven decision process, and concluding with the system's overall benefits. -->
+    <!-- Visualization Plan: -->
+    <!-- 1. Regulatory Hierarchy: Goal=Organize, Visualization=HTML/CSS Flowchart, Justification=Best for showing a top-down process. Implemented with Tailwind CSS, NO SVG/Mermaid. -->
+    <!-- 2. Road Classification: Goal=Compare, Visualization=Bar Chart, Justification=Clearly compares the discrete road width categories that form the basis of objective technical rules. Implemented with Chart.js, NO SVG. -->
+    <!-- 3. System Benefits: Goal=Inform, Visualization=Donut Chart, Justification=Shows the composition of the system's positive outcomes as a whole. Implemented with Chart.js, NO SVG. -->
+    <!-- Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in this output. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F2F2F2;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 40vh;
+            width: 100%;
+            max-width: 600px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flowchart-line {
+            width: 4px;
+            background-color: #0077C0;
+            margin: 0 auto;
+            position: relative;
+        }
+        .flowchart-arrow {
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid #0077C0;
+        }
+    </style>
+</head>
+<body class="text-[#333333]">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#005082] mb-4">Membedah Logika Regulasi Pemanfaatan Damija</h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Menciptakan sistem pemungutan retribusi yang sah, adil, transparan, dan dapat dilaksanakan di lapangan melalui hierarki peraturan yang logis.</p>
+        </header>
+
+        <main>
+            <section id="analogy" class="mb-16">
+                <div class="bg-white rounded-lg shadow-md p-8 text-center border-l-8 border-[#00A1E4]">
+                    <h2 class="text-2xl font-bold text-[#005082] mb-4">Dianalogikan Seperti Membangun Rumah</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-gray-700">
+                        <div class="flex flex-col items-center">
+                            <span class="text-4xl mb-2">📜</span>
+                            <h3 class="font-semibold">Izin Hukum</h3>
+                            <p class="text-sm">Fondasi legalitas</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-4xl mb-2">📐</span>
+                            <h3 class="font-semibold">Cetak Biru Aturan</h3>
+                            <p class="text-sm">Kerangka kerja umum</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-4xl mb-2">📋</span>
+                            <h3 class="font-semibold">Detail Material</h3>
+                            <p class="text-sm">Data kuantitatif</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-4xl mb-2">📖</span>
+                            <h3 class="font-semibold">Panduan Pemasangan</h3>
+                            <p class="text-sm">Petunjuk teknis</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="hierarchy" class="mb-16">
+                 <h2 class="text-3xl font-bold text-center text-[#005082] mb-10">Hierarki Regulasi dari Kewenangan ke Eksekusi</h2>
+                 <div class="relative">
+                    <div class="flow-container">
+                        <div class="level-card text-center mb-6">
+                             <div class="bg-white rounded-lg shadow-lg p-6 max-w-2xl mx-auto border-t-8 border-[#005082]">
+                                 <span class="text-2xl font-bold text-[#005082]">Level 1</span>
+                                 <h3 class="text-xl font-semibold mt-2">Peraturan Daerah (Perda)</h3>
+                                 <p class="mt-2 text-gray-600 font-semibold bg-blue-100 text-[#005082] py-1 px-3 rounded-full inline-block">PERAN: KEWENANGAN (AUTHORITY)</p>
+                                 <p class="mt-4 text-left">Menjadi fondasi hukum tertinggi yang memberikan "lampu hijau" atau hak kepada Pemerintah Provinsi untuk memungut retribusi pemanfaatan aset jalan.</p>
+                             </div>
+                        </div>
+                        <div class="h-16 flowchart-line"><div class="flowchart-arrow"></div></div>
+                        <div class="level-card text-center mb-6">
+                             <div class="bg-white rounded-lg shadow-lg p-6 max-w-2xl mx-auto border-t-8 border-[#0077C0]">
+                                 <span class="text-2xl font-bold text-[#0077C0]">Level 2</span>
+                                 <h3 class="text-xl font-semibold mt-2">Peraturan Gubernur (Pergub)</h3>
+                                 <p class="mt-2 text-gray-600 font-semibold bg-cyan-100 text-[#0077C0] py-1 px-3 rounded-full inline-block">PERAN: ATURAN NORMATIF</p>
+                                 <p class="mt-4 text-left">Menjembatani kewenangan dan pelaksanaan dengan menetapkan aturan main yang adil, termasuk formula baku perhitungan tarif yang objektif: <code class="bg-gray-200 p-1 rounded">Tarif = IJP × IL × Volume × HSD</code></p>
+                             </div>
+                        </div>
+                         <div class="h-16 flowchart-line"><div class="flowchart-arrow"></div></div>
+                        <div class="level-card text-center mb-6">
+                             <div class="bg-white rounded-lg shadow-lg p-6 max-w-2xl mx-auto border-t-8 border-[#00A1E4]">
+                                 <span class="text-2xl font-bold text-[#00A1E4]">Level 3</span>
+                                 <h3 class="text-xl font-semibold mt-2">Lampiran-Lampiran Pergub</h3>
+                                 <p class="mt-2 text-gray-600 font-semibold bg-sky-100 text-[#00A1E4] py-1 px-3 rounded-full inline-block">PERAN: NILAI KUANTITATIF</p>
+                                 <p class="mt-4 text-left">"Menghidupkan" formula dengan angka konkret. Lampiran ini menetapkan nilai Indeks Jenis Pemanfaatan (IJP), Indeks Lokasi (IL), dan klasifikasi setiap ruas jalan ke dalam kategori strategis.</p>
+                             </div>
+                        </div>
+                        <div class="h-16 flowchart-line"><div class="flowchart-arrow"></div></div>
+                        <div class="level-card text-center mb-6">
+                             <div class="bg-white rounded-lg shadow-lg p-6 max-w-2xl mx-auto border-t-8 border-[#00A1E4]">
+                                 <span class="text-2xl font-bold text-[#00A1E4]">Level 4</span>
+                                 <h3 class="text-xl font-semibold mt-2">Keputusan Gubernur (Kepgub)</h3>
+                                 <p class="mt-2 text-gray-600 font-semibold bg-sky-100 text-[#00A1E4] py-1 px-3 rounded-full inline-block">PERAN: SUMBER DATA RESMI</p>
+                                 <p class="mt-4 text-left">Berfungsi sebagai "buku data induk" yang menetapkan lebar Ruang Milik Jalan (Rumija) secara sah untuk setiap ruas. Ini menjadi jembatan krusial menuju objektivitas di lapangan.</p>
+                             </div>
+                        </div>
+                        <div class="h-16 flowchart-line"><div class="flowchart-arrow"></div></div>
+                        <div class="level-card text-center">
+                             <div class="bg-white rounded-lg shadow-lg p-6 max-w-2xl mx-auto border-t-8 border-[#00A1E4]">
+                                 <span class="text-2xl font-bold text-[#00A1E4]">Level 5</span>
+                                 <h3 class="text-xl font-semibold mt-2">Petunjuk Teknis (Juknis)</h3>
+                                 <p class="mt-2 text-gray-600 font-semibold bg-sky-100 text-[#00A1E4] py-1 px-3 rounded-full inline-block">PERAN: PEDOMAN OPERASIONAL</p>
+                                 <p class="mt-4 text-left">Panduan lapangan bagi tim teknis. Dengan merujuk data lebar jalan dari Kepgub, Juknis memungkinkan penerapan aturan teknis yang konsisten dan menghilangkan subjektivitas atau multi-tafsir.</p>
+                             </div>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+            <section id="data-to-decision" class="mb-16">
+                <div class="bg-white rounded-lg shadow-md p-8">
+                     <h2 class="text-3xl font-bold text-center text-[#005082] mb-2">Kunci Objektivitas: Data Menjadi Keputusan</h2>
+                     <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Juknis (Level 5) secara langsung menggunakan data dari Kepgub (Level 4) untuk mengklasifikasikan kondisi jalan. Proses ini mengubah data mentah (lebar jalan) menjadi aturan teknis yang dapat dieksekusi, menghilangkan opini dan negosiasi.</p>
+                     <div class="chart-container">
+                        <canvas id="roadClassificationChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="conclusion" class="mb-16">
+                 <div class="bg-white rounded-lg shadow-md p-8">
+                     <h2 class="text-3xl font-bold text-center text-[#005082] mb-2">Alur Keterhubungan dan Manfaat Sistem</h2>
+                     <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Setiap langkah memiliki dasar hukum yang kuat, menciptakan sistem yang kokoh dan dapat dipertanggungjawabkan dengan empat pilar manfaat utama.</p>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="chart-container">
+                            <canvas id="systemBenefitsChart"></canvas>
+                        </div>
+                        <div class="text-center md:text-left">
+                            <p class="text-lg font-semibold bg-[#005082] text-white py-2 px-4 rounded-md inline-block mb-4">Perda → Pergub → Kepgub → Juknis</p>
+                            <p class="text-gray-700">Dengan struktur hierarki ini, Pemerintah Provinsi NTT memiliki sistem yang tidak hanya memaksimalkan pendapatan, tetapi juga memberikan kepastian hukum bagi investor, transparansi bagi publik, dan pedoman yang jelas bagi aparat di lapangan.</p>
+                        </div>
+                     </div>
+                 </div>
+            </section>
+        </main>
+
+        <footer class="text-center text-gray-500 mt-12 py-4 border-t">
+            <p>Infografis Regulasi Pemanfaatan Damija</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tooltipTitleCallback = function(tooltipItems) {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                } else {
+                    return label;
+                }
+            };
+            
+            const roadClassificationCtx = document.getElementById('roadClassificationChart').getContext('2d');
+            new Chart(roadClassificationCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Tipe D (<10m)', 'Tipe C (10-15m)', 'Tipe B (15-20m)', 'Tipe A (>20m)'],
+                    datasets: [{
+                        label: 'Lebar Ruas Jalan (meter)',
+                        data: [10, 15, 20, 25],
+                        backgroundColor: [
+                            '#00A1E4',
+                            '#0077C0',
+                            '#005082',
+                            '#333333'
+                        ],
+                        borderColor: [
+                            '#00A1E4',
+                            '#0077C0',
+                            '#005082',
+                            '#333333'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Batas Atas Lebar Jalan (meter)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                           display: true,
+                           text: 'Klasifikasi Jalan Berdasarkan Lebar Resmi (Kepgub)'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: tooltipTitleCallback
+                            }
+                        }
+                    }
+                }
+            });
+
+            const systemBenefitsCtx = document.getElementById('systemBenefitsChart').getContext('2d');
+            new Chart(systemBenefitsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Kepastian Hukum', 'Transparansi Publik', 'Optimalisasi Pendapatan', ['Pedoman Jelas', 'bagi Aparat']],
+                    datasets: [{
+                        label: 'Manfaat Sistem',
+                        data: [25, 25, 25, 25],
+                        backgroundColor: [
+                            '#005082',
+                            '#0077C0',
+                            '#00A1E4',
+                            '#333333'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Empat Pilar Manfaat Utama Sistem Regulasi'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: tooltipTitleCallback
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

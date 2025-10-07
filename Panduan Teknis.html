@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografis: Logika Panduan Teknis Damija</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Palette: Modern & Professional -->
+    <!-- Narrative Plan: The infographic will contrast the old, subjective way of making decisions with the new, objective, data-driven system. It starts by highlighting the problem of vague rules. It then introduces the two "pillar" documents that form the solution: the Kepgub (the data) and the Juknis (the rules). The core of the infographic is a step-by-step flowchart demonstrating a real-world scenario, showing how an application is processed by checking the data, classifying the situation, and applying the correct rule to reach an objective decision. It concludes by summarizing the key benefits: objectivity, legal certainty, and efficiency. -->
+    <!-- Visualization Plan: -->
+    <!-- 1. Problem Statement: Goal=Compare, Visualization=Styled HTML Cards, Justification=Simple cards effectively contrast the "bad" subjective approach with the "good" objective one, setting the stage for the solution. Implemented with HTML/Tailwind, NO SVG. -->
+    <!-- 2. The Solution Pillars: Goal=Organize, Visualization=Styled HTML Cards, Justification=Cards clearly separate and define the roles of the two foundational documents (Kepgub for data, Juknis for rules). Implemented with HTML/Tailwind, NO SVG. -->
+    <!-- 3. The Logic Flow: Goal=Organize, Visualization=HTML/CSS Flowchart, Justification=A flowchart is the most intuitive way to explain the step-by-step decision-making process, from application to objective outcome. Implemented with HTML/Tailwind, NO SVG/Mermaid. -->
+    <!-- 4. Road Classification Chart: Goal=Inform, Visualization=Bar Chart (Chart.js), Justification=A bar chart provides a quick visual reference for how road widths are classified into different types (A, B, C, D), making the "classification" step in the flowchart tangible. Implemented with Chart.js/Canvas, NO SVG. -->
+    <!-- Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in this output. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ecf0f1;
+        }
+        .flow-arrow {
+            font-size: 2.5rem;
+            color: #3498db;
+            line-height: 1;
+            text-align: center;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="text-[#2c3e50]">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#2980b9] mb-4">Dari Data Menjadi Keputusan Objektif</h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Logika di balik panduan teknis yang menghilangkan subjektivitas dan menciptakan kepastian hukum.</p>
+        </header>
+
+        <main class="space-y-16">
+
+            <section id="problem">
+                <h2 class="text-3xl font-bold text-center text-[#2980b9] mb-10">Masalah Utama: Bahaya Aturan Deskriptif</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-red-100 border-l-8 border-red-500 p-6 rounded-lg shadow">
+                        <h3 class="font-bold text-xl text-red-700 mb-3">❌ Cara Lama (Subjektif)</h3>
+                        <p class="font-mono text-gray-700 mb-4 p-3 bg-red-50 rounded">"Tiang dilarang di jalan yang sempit."</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li><strong>Multi-tafsir:</strong> Apa definisi "sempit"?</li>
+                            <li><strong>Potensi Sengketa:</strong> Menimbulkan perdebatan.</li>
+                            <li><strong>Lemah Hukum:</strong> Aturan tidak terukur.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-100 border-l-8 border-green-500 p-6 rounded-lg shadow">
+                         <h3 class="font-bold text-xl text-green-700 mb-3">✅ Cara Baru (Objektif)</h3>
+                        <p class="font-mono text-gray-700 mb-4 p-3 bg-green-50 rounded">"Jika lebar jalan < 15m (Tipe C), tiang dilarang."</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li><strong>Pasti:</strong> Berdasarkan data meter yang jelas.</li>
+                            <li><strong>Konsisten:</strong> Aturan sama untuk semua.</li>
+                            <li><strong>Kuat Hukum:</strong> Keputusan dapat dipertanggungjawabkan.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="solution">
+                <h2 class="text-3xl font-bold text-center text-[#2980b9] mb-10">Solusi: Sistem Berbasis Data & Aturan</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-8">Solusinya adalah menghubungkan dua dokumen kunci untuk menciptakan sistem "jika-maka" yang logis dan tidak terbantahkan.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <span class="text-5xl">📊</span>
+                        <h3 class="text-2xl font-bold my-3">Kepgub Lebar Rumija</h3>
+                        <p class="font-semibold text-[#3498db]">BUKU DATA RESMI</p>
+                        <p class="text-gray-600 mt-2">Menyediakan satu-satunya sumber kebenaran untuk <strong class="text-[#2c3e50]">fakta fisik lebar jalan</strong> dalam satuan meter.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <span class="text-5xl">📖</span>
+                        <h3 class="text-2xl font-bold my-3">Juknis Dinas PUPR</h3>
+                        <p class="font-semibold text-[#3498db]">BUKU ATURAN TEKNIS</p>
+                        <p class="text-gray-600 mt-2">Berisi <strong class="text-[#2c3e50]">klasifikasi tipe jalan</strong> berdasarkan lebar dan aturan teknis spesifik untuk setiap tipe.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="logic-flow">
+                <h2 class="text-3xl font-bold text-center text-[#2980b9] mb-10">Alur Kerja Keputusan Objektif (Studi Kasus)</h2>
+                <div class="bg-white rounded-lg shadow-xl p-8">
+                    <p class="text-center mb-8 bg-gray-100 p-4 rounded-md"><strong>Permohonan:</strong> Pemasangan tiang listrik baru di ruas jalan "Batas Kota Soe - Kapan".</p>
+                    <div class="flex flex-col items-center space-y-4">
+                        <div class="p-4 bg-slate-50 rounded-lg w-full max-w-2xl text-center">
+                           <p><strong class="text-[#3498db]">LANGKAH 1: CEK FAKTA DATA</strong><br>Tim teknis merujuk ke <strong class="font-semibold">Kepgub Lebar Rumija</strong>.</p>
+                           <p class="mt-2 text-2xl font-bold bg-blue-100 p-2 rounded">Hasil: Lebar Resmi = 12 meter</p>
+                        </div>
+                        <div class="flow-arrow">⬇️</div>
+                        <div class="p-4 bg-slate-50 rounded-lg w-full max-w-2xl text-center">
+                           <p><strong class="text-[#3498db]">LANGKAH 2: TENTUKAN TIPE JALAN</strong><br>Tim teknis merujuk ke Pasal 6 <strong class="font-semibold">Juknis</strong>.</p>
+                           <p class="mt-2 text-2xl font-bold bg-blue-100 p-2 rounded">Logika: 12m masuk rentang 10m - 15m → Tipe C</p>
+                        </div>
+                         <div class="flow-arrow">⬇️</div>
+                        <div class="p-4 bg-slate-50 rounded-lg w-full max-w-2xl text-center">
+                           <p><strong class="text-[#3498db]">LANGKAH 3: TERAPKAN ATURAN</strong><br>Tim teknis merujuk ke Pasal 8 <strong class="font-semibold">Juknis</strong> tentang Utilitas Atas Tanah.</p>
+                           <p class="mt-2 text-lg font-bold bg-blue-100 p-2 rounded">Aturan Tipe C: "Pemasangan tiang di dalam Damija tidak diizinkan."</p>
+                        </div>
+                        <div class="flow-arrow">⬇️</div>
+                        <div class="p-6 bg-red-500 text-white rounded-lg w-full max-w-2xl text-center shadow-lg">
+                           <p class="text-xl font-bold">KEPUTUSAN AKHIR: DITOLAK</p>
+                           <p class="mt-1">Keputusan didasarkan pada data dan aturan yang jelas, bukan opini.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="classification-chart">
+                 <h2 class="text-3xl font-bold text-center text-[#2980b9] mb-10">Visualisasi Klasifikasi Tipe Jalan</h2>
+                 <div class="bg-white rounded-lg shadow-xl p-8">
+                    <p class="text-center text-gray-600 mb-6">Juknis mengklasifikasikan semua ruas jalan provinsi ke dalam empat tipe berdasarkan lebar Rumija yang tercatat di Kepgub.</p>
+                    <div class="chart-container">
+                        <canvas id="typeChart"></canvas>
+                    </div>
+                 </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center text-gray-500 mt-12 py-4 border-t">
+            <p>Sistem yang objektif, transparan, dan dapat dipertanggungjawabkan.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tooltipTitleCallback = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            const typeChartCtx = document.getElementById('typeChart').getContext('2d');
+            new Chart(typeChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Tipe D', 'Tipe C', 'Tipe B', 'Tipe A'],
+                    datasets: [{
+                        label: 'Rentang Lebar Rumija (meter)',
+                        data: [10, 15, 20, 30], 
+                        backgroundColor: [
+                            '#e74c3c',
+                            '#f39c12',
+                            '#3498db',
+                            '#2ecc71'
+                        ],
+                        borderColor: [
+                            '#c0392b',
+                            '#d35400',
+                            '#2980b9',
+                            '#27ae60'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    ...tooltipTitleCallback,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Lebar Maksimal (meter)'
+                            }
+                        }
+                    },
+                    plugins: {
+                         ...tooltipTitleCallback.plugins,
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                             ...tooltipTitleCallback.plugins.tooltip,
+                             callbacks: {
+                                 ...tooltipTitleCallback.plugins.tooltip.callbacks,
+                                 label: function(context) {
+                                     let label = context.dataset.label || '';
+                                     if (label) {
+                                         label += ': ';
+                                     }
+                                     const type = context.label;
+                                     if(type === 'Tipe D') label += '< 10m';
+                                     if(type === 'Tipe C') label += '10m - <15m';
+                                     if(type === 'Tipe B') label += '15m - <20m';
+                                     if(type === 'Tipe A') label += '≥ 20m';
+                                     return label;
+                                 }
+                             }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

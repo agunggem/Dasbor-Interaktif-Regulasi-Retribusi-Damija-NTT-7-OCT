@@ -98,6 +98,24 @@
                         <a href="#flow" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Alur Regulasi</a>
                         <a href="#calculator" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Kalkulator</a>
                         <a href="#components" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Komponen Tarif</a>
+                        
+                        <!-- Infografis Logika Dropdown -->
+                        <div class="relative" id="infographics-menu">
+                            <button class="nav-link px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                                Infografis Logika
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div id="infographics-dropdown" class="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+                                <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                    <a href="alur.html" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Logika Alur Regulasi</a>
+                                    <a href="kalkulator.html" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Logika Kalkulator Tarif</a>
+                                    <a href="Panduan Teknis.html" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Logika Panduan Teknis</a>
+                                    <a href="sumber data.html" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Logika Sumber Data</a>
+                                    <a href="desain.html" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Logika Desain Dasbor</a>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <a href="#guide" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Panduan Teknis</a>
                         <a href="#data" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Data Jalan</a>
                     </div>
@@ -638,6 +656,19 @@
 
         searchInput.addEventListener('keyup', (e) => populateRoadTable(e.target.value));
 
+        // Infographics Dropdown Logic
+        const menu = document.getElementById('infographics-menu');
+        const dropdown = document.getElementById('infographics-dropdown');
+
+        menu.addEventListener('mouseenter', () => {
+            dropdown.classList.remove('hidden');
+        });
+
+        menu.addEventListener('mouseleave', () => {
+            dropdown.classList.add('hidden');
+        });
+
+
         // Initial calls
         populateSelects();
         calculate();
@@ -669,4 +700,3 @@
     </script>
 </body>
 </html>
-

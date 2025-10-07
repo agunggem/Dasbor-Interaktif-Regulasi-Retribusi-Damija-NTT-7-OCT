@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografis: Logika di Balik Kalkulator Tarif Retribusi Damija</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Palette: Energetic & Playful -->
+    <!-- Narrative Plan: The infographic will first introduce the core tariff formula as the central theme. It will then break down each component of the formula (IJP, IL, HSD, Volume) into its own visual section, explaining its purpose and showing its value range with a chart. Finally, it will present an interactive calculator that allows users to see the formula in action, concluding with the system's core benefit: objectivity. -->
+    <!-- Visualization Plan: -->
+    <!-- 1. IJP Component: Goal=Compare, Visualization=Bar Chart, Justification=Effectively compares the multiplier values for different types of infrastructure, highlighting the principle of fairness based on commercial value. Implemented with Chart.js, NO SVG. -->
+    <!-- 2. IL Component: Goal=Compare, Visualization=Bar Chart, Justification=Clearly shows the difference in location-based multipliers, demonstrating the economic value principle of strategic locations. Implemented with Chart.js, NO SVG. -->
+    <!-- 3. HSD Component: Goal=Inform, Visualization=Single Big Number, Justification=Conveys a single, crucial base value effectively and with high impact. Implemented with HTML/Tailwind, NO SVG. -->
+    <!-- 4. Interactive Calculator: Goal=Organize/Inform, Visualization=Styled HTML Form, Justification=Provides a hands-on demonstration of the calculation process, making the abstract formula tangible and transparent. Implemented with HTML/Tailwind, NO SVG. -->
+    <!-- Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in this output. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+        }
+        .formula-box {
+            background-color: #1A1A2E;
+            color: #FFFFFF;
+            font-family: monospace;
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            border: 2px solid #E94560;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 45vh;
+            width: 100%;
+            max-width: 700px;
+            max-height: 450px;
+        }
+         @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="text-[#16213E]">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#16213E] mb-4">Logika di Balik Kalkulator Tarif Damija</h1>
+            <p class="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">Mengubah perhitungan kompleks menjadi proses yang transparan, dapat diprediksi, dan adil berdasarkan formula baku.</p>
+        </header>
+
+        <main>
+            <section id="formula" class="mb-16">
+                 <div class="bg-white rounded-lg shadow-md p-8 border-l-8 border-[#E94560]">
+                    <h2 class="text-2xl font-bold text-center text-[#16213E] mb-4">Formula Inti dari Peraturan Gubernur</h2>
+                    <p class="text-center text-gray-600 mb-6">Untuk menjamin objektivitas, semua perhitungan tarif tahunan wajib menggunakan formula standar berikut:</p>
+                    <div class="formula-box">
+                        Tarif Tahunan = IJP × IL × Volume × HSD
+                    </div>
+                </div>
+            </section>
+            
+            <section id="components" class="mb-12">
+                 <h2 class="text-3xl font-bold text-center text-[#16213E] mb-10">Membedah Setiap Komponen Formula</h2>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                     
+                     <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-bold text-[#0F3460] mb-2">IJP: Indeks Jenis Pemanfaatan</h3>
+                        <p class="text-gray-600 mb-4">Faktor pengali berdasarkan <span class="font-semibold">APA</span> yang dibangun. Ini mencerminkan prinsip keadilan, di mana pemanfaatan komersial tinggi membayar lebih dari utilitas dasar.</p>
+                        <div class="chart-container" style="height: 400px;">
+                            <canvas id="ijpChart"></canvas>
+                        </div>
+                     </div>
+
+                     <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-bold text-[#0F3460] mb-2">IL: Indeks Lokasi</h3>
+                        <p class="text-gray-600 mb-4">Faktor pengali berdasarkan <span class="font-semibold">DI MANA</span> lokasi pembangunan. Ini sejalan dengan prinsip nilai ekonomi lokasi strategis.</p>
+                        <div class="chart-container" style="height: 400px;">
+                            <canvas id="ilChart"></canvas>
+                        </div>
+                     </div>
+
+                     <div class="bg-white rounded-lg shadow-md p-6 md:col-span-2">
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                            <div>
+                                <h3 class="text-xl font-bold text-[#0F3460] mb-2">HSD: Harga Satuan Dasar</h3>
+                                <p class="text-gray-600 mb-4">Nilai dasar atau "harga sewa mentah" per satuan, yang ditetapkan berdasarkan survei harga pasar wajar untuk menjaga relevansi ekonomi.</p>
+                                 <h3 class="text-xl font-bold text-[#0F3460] mb-2 mt-6">Volume & Durasi</h3>
+                                <p class="text-gray-600">Ukuran pemanfaatan (meter, m², unit) dan jangka waktu (tahun) yang diinput pengguna. Mencerminkan prinsip dasar sewa.</p>
+                            </div>
+                            <div class="text-center p-8 bg-gray-50 rounded-lg">
+                                 <p class="text-lg text-gray-500">Nilai HSD Saat Ini</p>
+                                 <p class="text-6xl font-bold text-[#E94560]">Rp 25.000</p>
+                                 <p class="text-sm text-gray-500">(Sumber: Tabel 1, Lampiran Pergub)</p>
+                            </div>
+                         </div>
+                     </div>
+                 </div>
+            </section>
+
+            <section id="calculator" class="mb-16">
+                 <div class="bg-white rounded-lg shadow-lg p-8 border-t-8 border-[#533483]">
+                     <h2 class="text-3xl font-bold text-center text-[#16213E] mb-2">Kalkulator Simulasi Tarif</h2>
+                     <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Lihat bagaimana formula bekerja secara real-time. Pilih opsi dan masukkan nilai untuk melihat estimasi biaya retribusi.</p>
+                     
+                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                         <div>
+                             <label for="jenisPemanfaatan" class="block text-sm font-medium text-gray-700">1. Pilih Jenis Pemanfaatan (IJP)</label>
+                             <select id="jenisPemanfaatan" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#E94560] focus:border-[#E94560]">
+                                 <option value="3.0">Videotron (3.0)</option>
+                                 <option value="1.5">Kabel Fiber Optik (1.5)</option>
+                                 <option value="1.0" selected>Tiang Listrik (1.0)</option>
+                                 <option value="0.8">Pipa Air Bersih (0.8)</option>
+                                 <option value="0.5">Tugu/Monumen (0.5)</option>
+                             </select>
+                         </div>
+                         <div>
+                             <label for="kategoriLokasi" class="block text-sm font-medium text-gray-700">2. Pilih Kategori Lokasi (IL)</label>
+                             <select id="kategoriLokasi" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#E94560] focus:border-[#E94560]">
+                                 <option value="2.0">Kategori I - Pusat Ibu Kota (2.0)</option>
+                                 <option value="1.5" selected>Kategori II - Ibu Kota Kab. (1.5)</option>
+                                 <option value="1.0">Kategori III - Perkotaan (1.0)</option>
+                                 <option value="0.7">Kategori IV - Perdesaan (0.7)</option>
+                             </select>
+                         </div>
+                         <div>
+                             <label for="volume" class="block text-sm font-medium text-gray-700">3. Masukkan Volume (m/m²/unit)</label>
+                             <input type="number" id="volume" value="100" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#E94560] focus:border-[#E94560]">
+                         </div>
+                         <div>
+                             <label for="durasi" class="block text-sm font-medium text-gray-700">4. Masukkan Durasi (Tahun)</label>
+                             <input type="number" id="durasi" value="1" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#E94560] focus:border-[#E94560]">
+                         </div>
+                     </div>
+
+                     <div class="mt-8 text-center bg-gray-50 p-6 rounded-lg">
+                        <p class="text-lg text-gray-600">Estimasi Tarif Tahunan</p>
+                        <p id="tarifTahunan" class="text-4xl font-bold text-[#E94560] my-2">Rp 0</p>
+                        <p class="text-lg text-gray-600 mt-4">Total Estimasi Biaya</p>
+                        <p id="totalBiaya" class="text-4xl font-bold text-[#16213E]">Rp 0</p>
+                     </div>
+                 </div>
+            </section>
+        </main>
+
+        <footer class="text-center text-gray-500 mt-12 py-4 border-t">
+            <p>Setiap Rupiah dapat ditelusuri kembali ke peraturan yang berlaku, menghilangkan "area abu-abu" dan memberikan kepastian.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tooltipTitleCallback = function(tooltipItems) {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                } else {
+                    return label;
+                }
+            };
+            
+            const ijpData = {
+                labels: [['Tugu/', 'Monumen'], ['Pipa Air', 'Bersih'], 'Tiang Listrik', ['Kabel Fiber', 'Optik'], 'Videotron'],
+                values: [0.5, 0.8, 1.0, 1.5, 3.0]
+            };
+            const ijpCtx = document.getElementById('ijpChart').getContext('2d');
+            new Chart(ijpCtx, {
+                type: 'bar',
+                data: {
+                    labels: ijpData.labels,
+                    datasets: [{
+                        label: 'Nilai Indeks',
+                        data: ijpData.values,
+                        backgroundColor: '#E94560',
+                        borderColor: '#E94560',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Faktor Pengali' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'Contoh Nilai Indeks Jenis Pemanfaatan' },
+                        tooltip: { callbacks: { title: tooltipTitleCallback } }
+                    }
+                }
+            });
+
+            const ilData = {
+                labels: ['Perdesaan', 'Perkotaan', ['Ibu Kota', 'Kabupaten'], ['Pusat Ibu', 'Kota Provinsi']],
+                values: [0.7, 1.0, 1.5, 2.0]
+            };
+            const ilCtx = document.getElementById('ilChart').getContext('2d');
+            new Chart(ilCtx, {
+                type: 'bar',
+                data: {
+                    labels: ilData.labels,
+                    datasets: [{
+                        label: 'Nilai Indeks',
+                        data: ilData.values,
+                        backgroundColor: '#533483',
+                        borderColor: '#533483',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true },
+                        x: { title: { display: true, text: 'Kategori Lokasi' } }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'Nilai Indeks Lokasi per Kategori' },
+                        tooltip: { callbacks: { title: tooltipTitleCallback } }
+                    }
+                }
+            });
+
+            const ijpSelect = document.getElementById('jenisPemanfaatan');
+            const ilSelect = document.getElementById('kategoriLokasi');
+            const volumeInput = document.getElementById('volume');
+            const durasiInput = document.getElementById('durasi');
+            const tarifTahunanEl = document.getElementById('tarifTahunan');
+            const totalBiayaEl = document.getElementById('totalBiaya');
+            const HSD = 25000;
+
+            function calculateTarif() {
+                const ijp = parseFloat(ijpSelect.value) || 0;
+                const il = parseFloat(ilSelect.value) || 0;
+                const volume = parseFloat(volumeInput.value) || 0;
+                const durasi = parseInt(durasiInput.value) || 0;
+
+                const tarifTahunan = ijp * il * volume * HSD;
+                const totalBiaya = tarifTahunan * durasi;
+                
+                const formatter = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0,
+                });
+
+                tarifTahunanEl.textContent = formatter.format(tarifTahunan);
+                totalBiayaEl.textContent = formatter.format(totalBiaya);
+            }
+
+            ijpSelect.addEventListener('change', calculateTarif);
+            ilSelect.addEventListener('change', calculateTarif);
+            volumeInput.addEventListener('input', calculateTarif);
+            durasiInput.addEventListener('input', calculateTarif);
+
+            calculateTarif();
+        });
+    </script>
+
+</body>
+</html>

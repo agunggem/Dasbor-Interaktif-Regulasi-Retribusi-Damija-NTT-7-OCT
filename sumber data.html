@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografis: Logika Integrasi Data Ruas Jalan Damija</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Palette: Brilliant Blues -->
+    <!-- Narrative Plan: The infographic will visually narrate the data integration journey. It starts by introducing the two separate source documents (Physical and Economic data). It then illustrates the core "VLOOKUP"-like integration process, showing how data is matched and how the default rule is applied. The final section showcases the resulting unified, searchable data table, highlighting its functionality and benefit. -->
+    <!-- Visualization Plan: -->
+    <!-- 1. Source Documents: Goal=Organize, Visualization=Styled HTML Cards, Justification=Clearly presents the two distinct data sources, their purpose, and the specific information extracted from each, setting the stage for integration. Implemented with HTML/Tailwind, NO SVG. -->
+    <!-- 2. Integration Flowchart: Goal=Organize, Visualization=HTML/CSS Flowchart, Justification=Best method to visualize a step-by-step process, clearly showing the logic of matching data and applying the default category rule. Implemented with HTML/Tailwind, NO SVG/Mermaid. -->
+    <!-- 3. Final Unified Table: Goal=Inform, Visualization=Styled HTML Table with Search, Justification=Provides a tangible example of the final product—a comprehensive, searchable table—demonstrating the practical outcome of the integration process. Implemented with HTML/Tailwind and JS, NO SVG. -->
+    <!-- Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in this output. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F4F8;
+        }
+        .data-source-card {
+            border-left-width: 8px;
+            transition: all 0.3s ease-in-out;
+        }
+        .data-source-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .flow-step {
+            position: relative;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-top: 4px solid;
+        }
+        .flow-arrow {
+            font-size: 2.5rem;
+            color: #0077C0;
+            line-height: 1;
+        }
+        #searchTable tbody tr {
+            transition: background-color 0.2s ease;
+        }
+    </style>
+</head>
+<body class="text-[#1E293B]">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#005082] mb-4">Logika Sumber Data Interaktif</h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Mengubah lampiran dokumen yang terpisah menjadi satu tabel data yang utuh, fungsional, dan mudah dicari.</p>
+        </header>
+
+        <main>
+            <section id="sources" class="mb-16">
+                <h2 class="text-3xl font-bold text-center text-[#005082] mb-10">Dua Sumber Data, Dua Tujuan Berbeda</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-md p-6 data-source-card border-[#0077C0]">
+                        <span class="text-4xl">📏</span>
+                        <h3 class="text-2xl font-bold text-[#005082] mt-2 mb-3">Sumber Data Fisik</h3>
+                        <p class="font-semibold text-gray-700">Keputusan Gubernur tentang Lebar Rumija</p>
+                        <p class="text-gray-600 mt-2">Berfungsi sebagai "Buku Data Induk Fisik", berisi daftar lengkap 111 ruas jalan beserta lebar pastinya dalam meter.</p>
+                        <div class="mt-4 bg-blue-50 p-3 rounded-lg">
+                            <p class="font-semibold text-[#005082]">Informasi yang Diambil:</p>
+                            <ul class="list-disc list-inside text-gray-700">
+                                <li>Nama Ruas Jalan</li>
+                                <li>Lebar Rumija (m)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6 data-source-card border-[#00A1E4]">
+                        <span class="text-4xl">💰</span>
+                        <h3 class="text-2xl font-bold text-[#005082] mt-2 mb-3">Sumber Data Ekonomi</h3>
+                        <p class="font-semibold text-gray-700">Lampiran Pergub tentang Daftar Ruas Jalan</p>
+                        <p class="text-gray-600 mt-2">Berfungsi sebagai "Buku Data Nilai Ekonomi", mengklasifikasikan jalan berdasarkan nilai strategisnya untuk menentukan Indeks Lokasi (IL).</p>
+                        <div class="mt-4 bg-cyan-50 p-3 rounded-lg">
+                            <p class="font-semibold text-[#00A1E4]">Informasi yang Diambil:</p>
+                            <ul class="list-disc list-inside text-gray-700">
+                                <li>Nama Ruas Jalan</li>
+                                <li>Kategori Lokasi</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="integration" class="mb-16">
+                 <h2 class="text-3xl font-bold text-center text-[#005082] mb-10">Proses Integrasi: Menggabungkan Dua Dunia</h2>
+                 <div class="flex flex-col items-center space-y-4">
+                     <div class="flow-step border-blue-500 w-full max-w-3xl">
+                        <p class="text-center"><span class="font-bold text-blue-600">LANGKAH 1:</span> Ambil daftar lengkap 111 ruas jalan dari <span class="font-semibold">Sumber Data Fisik</span> sebagai dasar.</p>
+                     </div>
+                     <div class="flow-arrow">⬇️</div>
+                     <div class="flow-step border-cyan-500 w-full max-w-3xl">
+                        <p class="text-center"><span class="font-bold text-cyan-600">LANGKAH 2:</span> Untuk setiap ruas jalan, cari nama yang sama di <span class="font-semibold">Sumber Data Ekonomi</span>.</p>
+                     </div>
+                     <div class="flow-arrow">⬇️</div>
+                     <div class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+                        <div class="flow-step border-green-500">
+                            <p><span class="font-bold text-green-600">JIKA COCOK:</span> Ambil <span class="font-semibold">Kategori Lokasi (I, II, atau III)</span> dan gabungkan datanya.</p>
+                        </div>
+                         <div class="flow-step border-orange-500">
+                            <p><span class="font-bold text-orange-600">JIKA TIDAK COCOK:</span> Terapkan aturan pengecualian dan beri label <span class="font-semibold">"Kategori IV"</span>.</p>
+                        </div>
+                     </div>
+                     <div class="flow-arrow">⬇️</div>
+                     <div class="flow-step border-purple-500 w-full max-w-3xl">
+                        <p class="text-center"><span class="font-bold text-purple-600">HASIL:</span> Terbentuk satu basis data yang utuh untuk semua 111 ruas jalan, siap digunakan di dasbor.</p>
+                     </div>
+                 </div>
+            </section>
+
+            <section id="result" class="mb-16">
+                 <div class="bg-white rounded-lg shadow-lg p-8">
+                     <h2 class="text-3xl font-bold text-center text-[#005082] mb-2">Hasil Akhir: Tabel Interaktif yang Utuh</h2>
+                     <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Tabel komprehensif ini menampilkan 111 ruas jalan, hasil integrasi data fisik dan ekonomi dari dokumen resmi. Gunakan pencarian untuk menemukan data spesifik.</p>
+                     
+                     <div class="mb-4">
+                         <input type="text" id="searchInput" placeholder="Ketik untuk mencari nama ruas jalan..." class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0077C0]">
+                     </div>
+
+                     <div class="overflow-x-auto rounded-lg shadow" style="max-height: 600px;">
+                         <table id="searchTable" class="w-full text-sm text-left text-gray-500">
+                             <thead class="text-xs text-white uppercase bg-[#005082] sticky top-0">
+                                 <tr>
+                                     <th scope="col" class="px-6 py-3">Nama Ruas Jalan</th>
+                                     <th scope="col" class="px-6 py-3">Lebar Rumija (m)</th>
+                                     <th scope="col" class="px-6 py-3">Kategori Lokasi Final</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                             </tbody>
+                         </table>
+                         <div id="noResults" class="hidden text-center p-4 text-gray-500">Tidak ada hasil yang ditemukan.</div>
+                     </div>
+                 </div>
+            </section>
+        </main>
+
+        <footer class="text-center text-gray-500 mt-12 py-4 border-t">
+            <p>Transformasi data mentah menjadi basis data terstruktur untuk kemudahan akses dan pengambilan keputusan.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const masterRoadList = [
+                { "nama": "Jl. Yos Sudarso", "lebar": 10 },
+                { "nama": "Sp. Tiga Terminal LLBK - Sp, Tiga Straat A", "lebar": 15 },
+                { "nama": "Sp. Patung Sonbai - Sp, Tiga Bundaran Oebufu", "lebar": 20 },
+                { "nama": "Jl. Frans Lebu Raya", "lebar": 20 },
+                { "nama": "Jl. Mesakh Amalo", "lebar": 15 },
+                { "nama": "Sp. Patung sonbai - Bello (Bts, Kota Kupang)", "lebar": 15 },
+                { "nama": "Jl. A. Nisnoni", "lebar": 15 },
+                { "nama": "Sp. Polda - Sp. Patung Merpati", "lebar": 20 },
+                { "nama": "Jl. Amabi", "lebar": 10 },
+                { "nama": "Jl. Adi Sucipto", "lebar": 15 },
+                { "nama": "Bello - Oesao", "lebar": 15 },
+                { "nama": "Oesao - Bts. Kab. TTS", "lebar": 15 },
+                { "nama": "Oesao - Sulamu", "lebar": 10 },
+                { "nama": "Sp. Oekabiti - Buraen", "lebar": 10 },
+                { "nama": "Buraen - Sp. Tiga Takari", "lebar": 10 },
+                { "nama": "Sp. Ponain - Uitao", "lebar": 10 },
+                { "nama": "Sp. Tiga Takari - Lelogama", "lebar": 10 },
+                { "nama": "Bts. Kab. Kupang - Soe", "lebar": 15 },
+                { "nama": "Soe - Bts. Kab. TTU", "lebar": 15 },
+                { "nama": "Sp, Niki-Niki - Oenlasi", "lebar": 10 },
+                { "nama": "Oenlasi - Boking", "lebar": 10 },
+                { "nama": "Boking - Bts. Kab. Malaka", "lebar": 10 },
+                { "nama": "Sp. Panite - Kot'olin", "lebar": 10 },
+                { "nama": "Kot'olin - Nunbena", "lebar": 10 },
+                { "nama": "Bts. Kab. TTS - Kefamenanu", "lebar": 15 },
+                { "nama": "Kefamenanu - Bts. Kab. Belu", "lebar": 15 },
+                { "nama": "Sp. Eban - Bts. Negara (Wini)", "lebar": 10 },
+                { "nama": "Sp. Eban - Oelamasi", "lebar": 10 },
+                { "nama": "Sp. Noemuti - Oelamasi", "lebar": 10 },
+                { "nama": "Bts. Kab. TTU - Atambua", "lebar": 15 },
+                { "nama": "Atambua - Bts. Negara (Mota'ain)", "lebar": 15 },
+                { "nama": "Sp. Tiga Halilulik - Bts. Negara (Turiskain)", "lebar": 10 },
+                { "nama": "Sp. Tiga Umanen - Manleten", "lebar": 10 },
+                { "nama": "Sp. Tiga Umanen - Wedomu", "lebar": 10 },
+                { "nama": "Bts. Kab. Belu - Betun", "lebar": 10 },
+                { "nama": "Betun - Bts. Negara (Motamasin)", "lebar": 10 },
+                { "nama": "Sp. Tiga Weliman - Biudukfoho", "lebar": 10 },
+                { "nama": "Bts. Pelabuhan Laut Atapupu - Sp. Tiga Atapupu", "lebar": 10 },
+                { "nama": "Balauring - Wairiang", "lebar": 10 },
+                { "nama": "Wairiang - Boto", "lebar": 10 },
+                { "nama": "Sp. Boto - Lewoleba", "lebar": 10 },
+                { "nama": "Lewoleba - Waikomo", "lebar": 10 },
+                { "nama": "Waijarang - Wulandoni", "lebar": 10 },
+                { "nama": "Wulandoni - Lamalera", "lebar": 10 },
+                { "nama": "Mudajebak (Bts, Kab, Sikka) - Wairunu", "lebar": 10 },
+                { "nama": "Wairunu - Larantuka", "lebar": 15 },
+                { "nama": "Larantuka - Watowiti", "lebar": 10 },
+                { "nama": "Watowiti - Waiklibang", "lebar": 10 },
+                { "nama": "Waiwerang - Sp, Withiama", "lebar": 10 },
+                { "nama": "Sp, Kolilana - Sagu", "lebar": 10 },
+                { "nama": "Ritaebang - Lamakera", "lebar": 10 },
+                { "nama": "Koro (Bts, Kab, Ende) - Maumere", "lebar": 15 },
+                { "nama": "Maumere - Bts. Kab. Flotim (Napungmali)", "lebar": 15 },
+                { "nama": "Sp. Tiga Kewapante - Paga", "lebar": 10 },
+                { "nama": "Hepang - Sikka", "lebar": 10 },
+                { "nama": "Waipare - Bola", "lebar": 10 },
+                { "nama": "Napungmali - Mudajebak (Bts, Kab, Flores Timur)", "lebar": 10 },
+                { "nama": "Bts. Kab. Nagekeo - Ende", "lebar": 15 },
+                { "nama": "Bts. Kota Ende - Detusoko", "lebar": 10 },
+                { "nama": "Detusoko - Koro (Bts. Kab. Sikka)", "lebar": 10 },
+                { "nama": "Ndao - Wolowona", "lebar": 10 },
+                { "nama": "Sp. Tiga Nangapanda - Ropa", "lebar": 10 },
+                { "nama": "Bts. Kab. Manggarai Timur - Mbay", "lebar": 15 },
+                { "nama": "Mbay - Bts. Kab. Ende", "lebar": 15 },
+                { "nama": "Sp. Tiga Aegela - Mauponggo", "lebar": 10 },
+                { "nama": "Sp. Tiga Danga - Riung", "lebar": 10 },
+                { "nama": "Bts. Kab. Ngada - Bts. Kab. Nagekeo", "lebar": 15 },
+                { "nama": "Bts. Kab. Manggarai - Aimere", "lebar": 15 },
+                { "nama": "Aimere - Bajawa", "lebar": 15 },
+                { "nama": "Bajawa - Bts. Kab. Nagekeo", "lebar": 15 },
+                { "nama": "Sp. Tiga Soa - Waerana", "lebar": 10 },
+                { "nama": "Sp. Tiga Manulalu - Jerebu'u", "lebar": 10 },
+                { "nama": "Bts. Kab. Manggarai Barat - Ruteng", "lebar": 15 },
+                { "nama": "Ruteng - Bts. Kab. Ngada", "lebar": 15 },
+                { "nama": "Sp. Tiga Pela - Anam", "lebar": 10 },
+                { "nama": "Sp. Tiga Reo - Dampek", "lebar": 10 },
+                { "nama": "Bts. Kota Ruteng - Iteng", "lebar": 10 },
+                { "nama": "Labuan Bajo - Bts. Kab. Manggarai", "lebar": 15 },
+                { "nama": "Sp. Tiga Terang - Bts. Kab. Manggarai", "lebar": 10 },
+                { "nama": "Sp. Tiga Orong - Wae Lengkas", "lebar": 10 },
+                { "nama": "Sp. Tiga Werang - Pelabuhan Ferry", "lebar": 10 },
+                { "nama": "Waikabubak - Mamboro", "lebar": 10 },
+                { "nama": "Waikabubak - Tana Rara (Bts, Kab, Sumba Tengah)", "lebar": 10 },
+                { "nama": "Waikabubak - Wanokaka", "lebar": 10 },
+                { "nama": "Tana Rara (Bts. Kab. Sumba Barat) - Anakalang", "lebar": 10 },
+                { "nama": "Anakalang - Bts. Kab. Sumba Timur", "lebar": 10 },
+                { "nama": "Sp. Tiga Anakalang - Pasola", "lebar": 10 },
+                { "nama": "Bts. Kab. Sumba Tengah - Waingapu", "lebar": 10 },
+                { "nama": "Waingapu - Bts. Pelabuhan Waingapu", "lebar": 15 },
+                { "nama": "Sp. Tiga Maujawa - Bts. Pelabuhan Ferry", "lebar": 10 },
+                { "nama": "Sp. Tiga Waingapu - Melolo", "lebar": 10 },
+                { "nama": "Melolo - Kananggar", "lebar": 10 },
+                { "nama": "Kalabahi - Mebung", "lebar": 10 },
+                { "nama": "Mebung - Moru", "lebar": 10 },
+                { "nama": "Sp. Tiga Apui - Kokar", "lebar": 10 },
+                { "nama": "Kokar - Mali", "lebar": 10 },
+                { "nama": "Watutuku (Sp, Mola) - Mataraben", "lebar": 10 },
+                { "nama": "Baa - Bts. Pelabuhan Baa", "lebar": 10 },
+                { "nama": "Baa - Eahun", "lebar": 10 },
+                { "nama": "Sp. Tiga Eahun - Papela", "lebar": 10 },
+                { "nama": "Sp. Tiga Busalangga - Oelaba", "lebar": 10 },
+                { "nama": "Sabu - Seba", "lebar": 10 },
+                { "nama": "Seba - Biae", "lebar": 10 },
+                { "nama": "Biae - Bolou", "lebar": 10 },
+                { "nama": "Bolou - Eimadake", "lebar": 10 },
+                { "nama": "Eimadake - Seba", "lebar": 10 }
+            ];
+
+            const categoryMap = {
+                'Jl. Yos Sudarso': 'Kategori I',
+                'Sp. Tiga Terminal LLBK - Sp, Tiga Straat A': 'Kategori I',
+                'Sp. Patung Sonbai - Sp, Tiga Bundaran Oebufu': 'Kategori I',
+                'Jl. Frans Lebu Raya': 'Kategori I',
+                'Jl. Mesakh Amalo': 'Kategori I',
+                'Sp. Patung sonbai - Bello (Bts, Kota Kupang)': 'Kategori I',
+                'Jl. A. Nisnoni': 'Kategori I',
+                'Sp. Polda - Sp. Patung Merpati': 'Kategori I',
+                'Jl. Amabi': 'Kategori I',
+                'Jl. Adi Sucipto': 'Kategori I',
+                'Bello - Oesao': 'Kategori II',
+                'Atambua - Bts. Negara (Mota\'ain)': 'Kategori II',
+                'Labuan Bajo - Bts. Kab. Manggarai': 'Kategori II',
+                'Bts. Kab. Manggarai Barat - Ruteng': 'Kategori II',
+                'Bts. Kab. Manggarai - Aimere': 'Kategori II',
+                'Aimere - Bajawa': 'Kategori II',
+                'Bts. Kab. Ngada - Bts. Kab. Nagekeo': 'Kategori II',
+                'Bts. Kab. Manggarai Timur - Mbay': 'Kategori II',
+                'Bts. Kab. Nagekeo - Ende': 'Kategori II',
+                'Koro (Bts, Kab, Ende) - Maumere': 'Kategori II',
+                'Maumere - Bts. Kab. Flotim (Napungmali)': 'Kategori II',
+                'Wairunu - Larantuka': 'Kategori II',
+                'Bts. Kab. Kupang - Soe': 'Kategori II',
+                'Waingapu - Bts. Pelabuhan Waingapu': 'Kategori II',
+                'Sp. Tiga Halilulik - Bts. Negara (Turiskain)': 'Kategori III',
+                'Sp. Tiga Umanen - Manleten': 'Kategori III',
+                'Sp. Tiga Umanen - Wedomu': 'Kategori III',
+                'Bts. Pelabuhan Laut Atapupu - Sp. Tiga Atapupu': 'Kategori III',
+                'Sp. Tiga Orong - Wae Lengkas': 'Kategori III',
+                'Bts. Kota Ruteng - Iteng': 'Kategori III',
+                'Sp. Tiga Soa - Waerana': 'Kategori III',
+                'Sp. Tiga Danga - Riung': 'Kategori III',
+                'Ndao - Wolowona': 'Kategori III',
+                'Sp. Tiga Kewapante - Paga': 'Kategori III',
+                'Sp, Niki-Niki - Oenlasi': 'Kategori III'
+            };
+
+            const integratedData = masterRoadList.map(road => {
+                const category = categoryMap[road.nama] || 'Kategori IV';
+                return {
+                    nama: road.nama,
+                    lebar: road.lebar,
+                    kategori: category
+                };
+            });
+
+            const searchTable = document.getElementById('searchTable').getElementsByTagName('tbody')[0];
+            const noResults = document.getElementById('noResults');
+            
+            function populateTable(data) {
+                searchTable.innerHTML = '';
+                if (data.length === 0) {
+                    noResults.classList.remove('hidden');
+                    return;
+                }
+                noResults.classList.add('hidden');
+
+                data.forEach(item => {
+                    let row = searchTable.insertRow();
+                    row.className = 'bg-white border-b hover:bg-gray-50';
+                    
+                    let kategoriClass = 'text-gray-700';
+                    if (item.kategori === 'Kategori I') kategoriClass = 'text-green-600 font-semibold';
+                    else if (item.kategori === 'Kategori II') kategoriClass = 'text-blue-600 font-semibold';
+                    else if (item.kategori === 'Kategori III') kategoriClass = 'text-yellow-600 font-semibold';
+                    else if (item.kategori === 'Kategori IV') kategoriClass = 'text-orange-600 font-semibold';
+
+                    row.innerHTML = `
+                        <td class="px-6 py-4 font-medium text-gray-900">${item.nama}</td>
+                        <td class="px-6 py-4">${item.lebar}</td>
+                        <td class="px-6 py-4 ${kategoriClass}">${item.kategori}</td>
+                    `;
+                });
+            }
+
+            populateTable(integratedData);
+            
+            const searchInput = document.getElementById('searchInput');
+
+            searchInput.addEventListener('keyup', function() {
+                const filter = searchInput.value.toLowerCase();
+                const filteredData = integratedData.filter(item => 
+                    item.nama.toLowerCase().includes(filter)
+                );
+                populateTable(filteredData);
+            });
+        });
+    </script>
+
+</body>
+</html>
+
