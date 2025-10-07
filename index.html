@@ -138,7 +138,7 @@
                         <span class="block text-sm font-semibold accent-text">ATURAN NORMATIF</span>
                         <h4 class="text-lg font-bold mt-1">Peraturan Gubernur</h4>
                         <p class="text-sm mt-2 text-gray-600">Menjabarkan prinsip, prosedur, dan formula perhitungan tarif retribusi.</p>
-                        <a href="Draf Rancangan Peraturan Gubernur NTT (Diperbarui).pdf" target="_blank" class="btn-secondary mt-3 inline-block">Lihat Dokumen</a>
+                        <a href="RANPERGUB.pdf" target="_blank" class="btn-secondary mt-3 inline-block">Lihat Dokumen</a>
                     </div>
                     <div class="flow-arrow hidden md:block">➔</div>
                     <div class="md:col-span-3 grid grid-cols-1 gap-4">
@@ -273,7 +273,7 @@
                 </div>
                 <div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-md border border-gray-200/80">
                     <input type="text" id="searchInput" placeholder="Cari nama ruas jalan atau kabupaten..." class="w-full p-2 border border-gray-300 rounded-md mb-4">
-                    <div class="overflow-x-auto">
+                    <div class="overflow-y-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
@@ -325,27 +325,123 @@
         ];
         
         const roadData = [
-            { name: "Jl. Piet A. Tallo (Batas Kota - Penfui)", location: "Kota Kupang", width: 30, category: "Kategori I" },
-            { name: "Jl. Adi Sucipto", location: "Kota Kupang", width: 25, category: "Kategori I" },
-            { name: "Jalan Soekarno-Hatta (Labuan Bajo)", location: "Kab. Manggarai Barat", width: 25, category: "Kategori II" },
-            { name: "Ruas Oesapa - Sulamu", location: "Kab. Kupang", width: 15, category: "Kategori III" },
-            { name: "Ruas Batas Kota Soe - Kapan", location: "Kab. Timor Tengah Selatan", width: 12, category: "Kategori III" },
-            { name: "Jalan Lingkar Utara Kefamenanu", location: "Kab. Timor Tengah Utara", width: 20, category: "Kategori II" },
-            { name: "Ruas Jalan Atambua - Atapupu", location: "Kab. Belu", width: 15, category: "Kategori III" },
-            { name: "Ruas Betun - Batas Kab. Belu", location: "Kab. Malaka", width: 10, category: "Kategori IV" },
-            { name: "Ruas Ruteng - Iteng", location: "Kab. Manggarai", width: 12, category: "Kategori IV" },
-            { name: "Ruas Bajawa - Mataloko", location: "Kab. Ngada", width: 15, category: "Kategori III" },
-            { name: "Ruas Ende Wolowaru", location: "Kab. Ende", width: 15, category: "Kategori III" },
-            { name: "Ruas Maumere - Lela", location: "Kab. Sikka", width: 20, category: "Kategori II" },
-            { name: "Ruas Larantuka - Wulanggitang", location: "Kab. Flores Timur", width: 12, category: "Kategori IV" },
-            { name: "Jalan Lingkar Pulau Lembata", location: "Kab. Lembata", width: 10, category: "Kategori IV" },
-            { name: "Ruas Waingapu Melolo", location: "Kab. Sumba Timur", width: 15, category: "Kategori III" },
-            { name: "Ruas Waikabubak - Mamboro", location: "Kab. Sumba Barat", width: 12, category: "Kategori IV" },
-            { name: "Ruas Tambolaka - Kodi", location: "Kab. Sumba Barat Daya", width: 15, category: "Kategori III" },
-            { name: "Ruas Anakalang - Laiwangi", location: "Kab. Sumba Tengah", width: 10, category: "Kategori IV" },
-            { name: "Jalan Lingkar Pulau Alor", location: "Kab. Alor", width: 10, category: "Kategori IV" },
-            { name: "Ruas Ba'a - Nemberala", location: "Kab. Rote Ndao", width: 12, category: "Kategori IV" },
-            { name: "Ruas Seba - Mesara", location: "Kab. Sabu Raijua", width: 10, category: "Kategori IV" },
+            // Kategori I
+            { name: "Jl. Yos Sudarso", location: "Kota Kupang", width: 10, category: "Kategori I" },
+            { name: "Sp. Tiga Terminal LLBK - Sp, Tiga Straat A", location: "Kota Kupang", width: 10, category: "Kategori I" },
+            { name: "Sp. Patung Sonbai - Sp, Tiga Bundaran Oebufu", location: "Kota Kupang", width: 10, category: "Kategori I" },
+            { name: "Jl. Frans Lebu Raya", location: "Kota Kupang", width: 10, category: "Kategori I" },
+            { name: "Jl. Mesakh Amalo", location: "Kota Kupang", width: 10, category: "Kategori I" },
+            { name: "Sp. Patung sonbai - Bello (Bts, Kota Kupang)", location: "Kota Kupang", width: 10, category: "Kategori I" },
+            { name: "Jl. A. Nisnoni", location: "Kota Kupang", width: 10, category: "Kategori I" },
+            { name: "Sp. Polda Sp. Patung Merpati", location: "Kota Kupang", width: 10, category: "Kategori I" },
+            { name: "Jl. Amabi", location: "Kota Kupang", width: 10, category: "Kategori I" },
+            
+            // Kategori II
+            { name: "Sp. Nggorang - Sp. Terang", location: "Kabupaten Manggarai Barat", width: 11, category: "Kategori II" },
+            { name: "Poma - Bajawa", location: "Kabupaten Ngada", width: 10, category: "Kategori II" },
+            { name: "Ende - Nuabosi", location: "Kabupaten Ende", width: 10, category: "Kategori II" },
+            { name: "Lemon (Bts. Kab. TTS) - Kefamenanu", location: "Kabupaten Timor Tengah Utara", width: 10, category: "Kategori II" },
+            { name: "Atambua - Sp. Manleten", location: "Kabupaten Belu", width: 10, category: "Kategori II" },
+            { name: "Wanibesak - Betun", location: "Kabupaten Malaka", width: 10, category: "Kategori II" },
+            { name: "Betun - Motamasin (Bts, Negara)", location: "Kabupaten Malaka", width: 11, category: "Kategori II" },
+            { name: "Waikabubak - Wanokaka", location: "Kabupaten Sumba Barat", width: 10, category: "Kategori II" },
+            { name: "Bondokodi - Waitabula", location: "Kabupaten Sumba Barat Daya", width: 10, category: "Kategori II" },
+            { name: "Soe - Kapan", location: "Kabupaten Timor Tengah Selatan", width: 10, category: "Kategori II" },
+            { name: "Kalabahi - Kokar", location: "Kabupaten Alor", width: 10, category: "Kategori II" },
+            { name: "Seba - Ege", location: "Kabupaten Sabu Raijua", width: 10, category: "Kategori II" },
+            { name: "Baa - Batutua", location: "Kabupaten Rote Ndao", width: 10, category: "Kategori II" },
+
+            // Kategori III
+            { name: "Borong - Nceang", location: "Kabupaten Manggarai Timur", width: 10, category: "Kategori III" },
+            { name: "Malanuza - Maumbawa (Bts, Kab, Nagekeo)", location: "Kabupaten Ngada", width: 10, category: "Kategori III" },
+            { name: "Nggolonio (Bts, Kab, Ngada) - Danga", location: "Kabupaten Nagekeo", width: 10, category: "Kategori III" },
+            { name: "Marapokot - Aeramo", location: "Kabupaten Nagekeo", width: 10, category: "Kategori III" },
+            { name: "Detusoko - Maurole", location: "Kabupaten Ende", width: 10, category: "Kategori III" },
+            { name: "Keliting (Bts. Kab Belu) - Wini Sakato (Bts. Negara)", location: "Kabupaten Timor Tengah Utara", width: 11, category: "Kategori III" },
+            { name: "Melolo - Kananggar", location: "Kabupaten Sumba Timur", width: 10, category: "Kategori III" },
+            { name: "Lingkar Luar Kota Kupang - Tablolong", location: "Kabupaten Kupang", width: 10, category: "Kategori III" },
+            { name: "Oesao - Buraen", location: "Kabupaten Kupang", width: 10, category: "Kategori III" },
+            { name: "Kapan - Nenas", location: "Kabupaten Timor Tengah Selatan", width: 10, category: "Kategori III" },
+            { name: "Koro (Bts, Kab, Ende) - Maumere", location: "Kabupaten Sikka", width: 10, category: "Kategori III" },
+            { name: "Wailebe - Waiwerang", location: "Kabupaten Flores Timur", width: 10, category: "Kategori III" },
+
+            // Kategori IV
+            { name: "Sp. Terang - Sp. Noa", location: "Kabupaten Manggarai Barat", width: 10, category: "Kategori IV" },
+            { name: "Sp. Noa - Wontong (Bts. Kab. Manggarai)", location: "Kabupaten Manggarai Barat", width: 10, category: "Kategori IV" },
+            { name: "Sp. Noa - Golowelu (Bts. Kab. Manggarai)", location: "Kabupaten Manggarai Barat", width: 10, category: "Kategori IV" },
+            { name: "Nggalak (Bts. Manggarai Barat) - Kendindi", location: "Kabupaten Manggarai", width: 10, category: "Kategori IV" },
+            { name: "Reo - Wae Gongger (Bts. Kab. Manggarai Timur)", location: "Kabupaten Manggarai", width: 10, category: "Kategori IV" },
+            { name: "Sp. Cumbi - Iteng", location: "Kabupaten Manggarai", width: 10, category: "Kategori IV" },
+            { name: "Wae Gongger (Bts, Kab, Manggarai) - Pota", location: "Kabupaten Manggarai Timur", width: 10, category: "Kategori IV" },
+            { name: "Pota - Labuan Kelambu (Bts, Kab, Ngada)", location: "Kabupaten Manggarai Timur", width: 10, category: "Kategori IV" },
+            { name: "Bealaing - Wae Rasan (Bts, Kab, Ngada)", location: "Kabupaten Manggarai Timur", width: 10, category: "Kategori IV" },
+            { name: "Sp. Dangka Mangkang - Dampek", location: "Kabupaten Manggarai Timur", width: 10, category: "Kategori IV" },
+            { name: "Mbazang (Bts, Kab, Manggarai Timur) - Sp, Waipana", location: "Kabupaten Ngada", width: 10, category: "Kategori IV" },
+            { name: "Labuan Kelambu (Bts, Kab, Manggarai) - Riung", location: "Kabupaten Ngada", width: 10, category: "Kategori IV" },
+            { name: "Riung - Lengkosambi (Bts, Kab, Nagekeo)", location: "Kabupaten Ngada", width: 10, category: "Kategori IV" },
+            { name: "Aeramo - Kaburea (Bts, Kab, Ende)", location: "Kabupaten Nagekeo", width: 10, category: "Kategori IV" },
+            { name: "Maumbawa (Bts, Kab, Ngada) - Sp, Gako", location: "Kabupaten Nagekeo", width: 10, category: "Kategori IV" },
+            { name: "Kaburea (Bts, Kab, Nagekeo) - Ranakolo", location: "Kabupaten Ende", width: 10, category: "Kategori IV" },
+            { name: "Maurole - Koro (Bts, Kab, Sikka)", location: "Kabupaten Ende", width: 10, category: "Kategori IV" },
+            { name: "Wologai - Detukeli", location: "Kabupaten Ende", width: 10, category: "Kategori IV" },
+            { name: "Eban - Sp. Saenam", location: "Kabupaten Timor Tengah Utara", width: 10, category: "Kategori IV" },
+            { name: "Maubesi - Sp. Manamas", location: "Kabupaten Timor Tengah Utara", width: 10, category: "Kategori IV" },
+            { name: "Teun (Bts. Kab. Malaka) - Halilulik", location: "Kabupaten Belu", width: 10, category: "Kategori IV" },
+            { name: "Sp. Dualasi - Weluli", location: "Kabupaten Belu", width: 10, category: "Kategori IV" },
+            { name: "Lakafehan - Keliting (Bts. Kab. TTU)", location: "Kabupaten Belu", width: 10, category: "Kategori IV" },
+            { name: "Sp. Berluli- Teluk Gurita", location: "Kabupaten Belu", width: 11, category: "Kategori IV" },
+            { name: "Lamea (Bts, Kab, TTU) - Wanibesak", location: "Kabupaten Malaka", width: 10, category: "Kategori IV" },
+            { name: "Sp. Welaus - Kusa (Bts. Kab. Belu)", location: "Kabupaten Malaka", width: 10, category: "Kategori IV" },
+            { name: "Sp, Mohubukul - Lumbung", location: "Kabupaten Sumba Timur", width: 10, category: "Kategori IV" },
+            { name: "Kananggar - Sp, Aukakehok", location: "Kabupaten Sumba Timur", width: 10, category: "Kategori IV" },
+            { name: "Sp, Aukakehok - Baing", location: "Kabupaten Sumba Timur", width: 10, category: "Kategori IV" },
+            { name: "Sp. Aukakehok - Sp. Lailunggi", location: "Kabupaten Sumba Timur", width: 10, category: "Kategori IV" },
+            { name: "Sp. Lailunggi - Malahar", location: "Kabupaten Sumba Timur", width: 10, category: "Kategori IV" },
+            { name: "Malahar - Praipaha", location: "Kabupaten Sumba Timur", width: 10, category: "Kategori IV" },
+            { name: "Wee Luri (Bts. Kab. Sumba Barat) - Mamboro", location: "Kabupaten Sumba Tengah", width: 10, category: "Kategori IV" },
+            { name: "Waikabubak - Tana Rara (Bts, Kab, Sumba Tengah)", location: "Kabupaten Sumba Barat", width: 10, category: "Kategori IV" },
+            { name: "Sp. Padedeweri - Sp. Patiala", location: "Kabupaten Sumba Barat", width: 10, category: "Kategori IV" },
+            { name: "Sp. Patiala - Wetana (Bts. Kab. Sumba Barat Daya)", location: "Kabupaten Sumba Barat", width: 10, category: "Kategori IV" },
+            { name: "Karang Indah (Bts. Kab. Sumba Barat) - Bondokodi", location: "Kabupaten Sumba Barat Daya", width: 10, category: "Kategori IV" },
+            { name: "Radamata - Ketewer", location: "Kabupaten Sumba Barat Daya", width: 10, category: "Kategori IV" },
+            { name: "Jl, Dalam K,I, Bolok", location: "Kabupaten Kupang", width: 10, category: "Kategori IV" },
+            { name: "Oelomin (Bts, Kab, Kupang) - Baun", location: "Kabupaten Kupang", width: 10, category: "Kategori IV" },
+            { name: "Baun - Ekam", location: "Kabupaten Kupang", width: 10, category: "Kategori IV" },
+            { name: "Oekabiti - Oemoro (Bts, Kab, TTS)", location: "Kabupaten Kupang", width: 10, category: "Kategori IV" },
+            { name: "Oelmasi - Sp, Sulamu", location: "Kabupaten Kupang", width: 10, category: "Kategori IV" },
+            { name: "Sp. Sulamu - barate", location: "Kabupaten Kupang", width: 10, category: "Kategori IV" },
+            { name: "Barate - Manubelon", location: "Kabupaten Kupang", width: 10, category: "Kategori IV" },
+            { name: "Manubelon - Naikliu", location: "Kabupaten Kupang", width: 10, category: "Kategori IV" },
+            { name: "Naikliu - Oepoli (Bts, Negara)", location: "Kabupaten Kupang", width: 11, category: "Kategori IV" },
+            { name: "Netemnanu (Bts, Kab TTS) - Sp, Noelelo", location: "Kabupaten Kupang", width: 10, category: "Kategori IV" },
+            { name: "Bokong - Lelogama", location: "Kabupaten Kupang", width: 10, category: "Kategori IV" },
+            { name: "Hansisi - Oesalaen", location: "Kabupaten Kupang", width: 10, category: "Kategori IV" },
+            { name: "Pollo (Bts, Kab TTS) - Sp, Panite", location: "Kabupaten Timor Tengah Selatan", width: 10, category: "Kategori IV" },
+            { name: "Batu Putih - Panite", location: "Kabupaten Timor Tengah Selatan", width: 10, category: "Kategori IV" },
+            { name: "Panite - Kolbano", location: "Kabupaten Timor Tengah Selatan", width: 10, category: "Kategori IV" },
+            { name: "Kolbano - Boking", location: "Kabupaten Timor Tengah Selatan", width: 10, category: "Kategori IV" },
+            { name: "Boking - Skinu (Bts, Kab, Malaka)", location: "Kabupaten Timor Tengah Selatan", width: 10, category: "Kategori IV" },
+            { name: "Nenas - Nuapain (Bts, Kab, Kupang)", location: "Kabupaten Timor Tengah Selatan", width: 10, category: "Kategori IV" },
+            { name: "Kapan - Fatumnutu (Bts, Kab TTU)", location: "Kabupaten Timor Tengah Selatan", width: 10, category: "Kategori IV" },
+            { name: "Sp, Niki-Niki - Oenlasi", location: "Kabupaten Timor Tengah Selatan", width: 10, category: "Kategori IV" },
+            { name: "Oenlasi - Boking", location: "Kabupaten Timor Tengah Selatan", width: 10, category: "Kategori IV" },
+            { name: "Hepang - Sikka", location: "Kabupaten Sikka", width: 10, category: "Kategori IV" },
+            { name: "Waipare - Bola", location: "Kabupaten Sikka", width: 10, category: "Kategori IV" },
+            { name: "Napungmali - Mudajebak (Bts, Kab, Flores Timur)", location: "Kabupaten Sikka", width: 10, category: "Kategori IV" },
+            { name: "Mudajebak (Bts, Kab, Sikka) - Wairunu", location: "Kabupaten Flores Timur", width: 10, category: "Kategori IV" },
+            { name: "Larantuka - Watowiti", location: "Kabupaten Flores Timur", width: 10, category: "Kategori IV" },
+            { name: "Watowiti - Waiklibang", location: "Kabupaten Flores Timur", width: 10, category: "Kategori IV" },
+            { name: "Waiwerang - Sp, Withiama", location: "Kabupaten Flores Timur", width: 10, category: "Kategori IV" },
+            { name: "Sp, Kolilana - Sagu", location: "Kabupaten Flores Timur", width: 10, category: "Kategori IV" },
+            { name: "Ritaebang - Lamakera", location: "Kabupaten Flores Timur", width: 10, category: "Kategori IV" },
+            { name: "Balauring - Wairiang", location: "Kabupaten Lembata", width: 10, category: "Kategori IV" },
+            { name: "Waijarang - Wulandoni", location: "Kabupaten Lembata", width: 10, category: "Kategori IV" },
+            { name: "Kokar - Mali", location: "Kabupaten Alor", width: 10, category: "Kategori IV" },
+            { name: "Watatuku (Sp, Mola) - Mataraben", location: "Kabupaten Alor", width: 10, category: "Kategori IV" },
+            { name: "Baranusa - Puntaru", location: "Kabupaten Alor", width: 10, category: "Kategori IV" },
+            { name: "Beangonong - Boloang", location: "Kabupaten Alor", width: 10, category: "Kategori IV" },
+            { name: "Ledeana - Teriu", location: "Kabupaten Sabu Raijua", width: 10, category: "Kategori IV" },
+            { name: "Ledemanu - Lobodei", location: "Kabupaten Sabu Raijua", width: 10, category: "Kategori IV" }
         ];
 
         const guideData = {
